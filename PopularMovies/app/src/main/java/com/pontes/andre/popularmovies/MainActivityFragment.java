@@ -32,10 +32,21 @@ public class MainActivityFragment extends Fragment {
                                     int position, long id) {
 
                 Intent details = new Intent(getActivity(), DetailActivity.class);
+
+                details.putExtra("movie", getMovie());
+
                 startActivity(details);
             }
         });
 
         return view;
+    }
+
+    private Movie getMovie()
+    {
+        Movie movie = new Movie();
+        movie.setName("back to the future");
+
+        return movie;
     }
 }
