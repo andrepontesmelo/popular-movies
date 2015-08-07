@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import java.sql.Date;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -45,7 +47,13 @@ public class MainActivityFragment extends Fragment {
     private Movie getMovie()
     {
         Movie movie = new Movie();
-        movie.setName("back to the future");
+        movie.setTitle("Minions");
+        movie.setReleaseDate(Date.valueOf("2015-07-10"));
+        movie.setPosterUrl("/qARJ35IrJNFzFWQGcyWP4r1jyXE.jpg");
+        movie.setVoteAvg(6.5);
+        movie.setSynopsis("Minions Stuart, Kevin and Bob are recruited by Scarlet Overkill, a " +
+                " super-villain who, alongside her inventor husband Herb, " +
+                " hatches a plot to take over the world");
 
         return movie;
     }

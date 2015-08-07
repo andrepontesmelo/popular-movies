@@ -14,7 +14,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         TextView txtMovieName = (TextView) findViewById(R.id.textview_movie_name);
-        txtMovieName.setText(getMovie().getName());
+        txtMovieName.setText(getMovie().getTitle());
     }
 
     private Movie getMovie()
