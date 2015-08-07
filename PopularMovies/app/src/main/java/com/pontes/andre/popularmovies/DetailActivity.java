@@ -19,7 +19,7 @@ public class DetailActivity extends AppCompatActivity {
 
         TextView txtMovieName = (TextView) findViewById(R.id.textview_movie_name);
         txtMovieName.setText(movie.getTitle());
-        
+
         TextView txtMovieSynopsis = (TextView) findViewById(R.id.textView_synopsis);
         txtMovieSynopsis.setText(movie.getSynopsis());
 
@@ -31,6 +31,8 @@ public class DetailActivity extends AppCompatActivity {
         Picasso.with(this)
                 .load(movie.getPosterUrl())
                 .into(imageView);
+
+        setTitle("Synopsis");
     }
 
     private Movie getMovie()

@@ -11,9 +11,6 @@ import android.widget.GridView;
 
 import java.sql.Date;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class MainActivityFragment extends Fragment {
 
     public MainActivityFragment() {
