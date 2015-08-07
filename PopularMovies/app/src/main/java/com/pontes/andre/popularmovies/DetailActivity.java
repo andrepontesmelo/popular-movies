@@ -23,9 +23,6 @@ public class DetailActivity extends AppCompatActivity {
         TextView txtMovieSynopsis = (TextView) findViewById(R.id.textView_synopsis);
         txtMovieSynopsis.setText(movie.getSynopsis());
 
-        TextView txtRelease = (TextView) findViewById(R.id.textView_Release);
-        txtRelease.setText(movie.getReleaseDate().toString());
-
         RatingBar rating = (RatingBar) findViewById(R.id.ratingBar);
         rating.setRating(movie.getVoteAvg());
 

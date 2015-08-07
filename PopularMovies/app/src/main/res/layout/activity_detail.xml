@@ -1,54 +1,47 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.pontes.andre.popularmovies.DetailActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content" android:layout_height="fill_parent">
 
-    <TextView
-        style="@style/Detail"
-        android:id="@+id/textview_movie_name"
-        android:text="Minions"
-        android:textStyle="bold"
-        />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        tools:context="com.pontes.andre.popularmovies.DetailActivity">
 
-    <TextView
-        style="@style/Detail"
-        android:text="Minions Stuart, Kevin and Bob are recruited by Scarlet Overkill, a super-villain who, alongside her inventor husband Herb, hatches a plot to take over the world"
-        android:id="@+id/textView_synopsis"
-        android:textIsSelectable="true"
-        android:layout_below="@+id/textview_movie_name"
-        android:layout_marginTop="36dp"
-        />
+            <TextView
+                style="@style/Detail"
+                android:id="@+id/textview_movie_name"
+                android:text="Minions"
+                android:textStyle="bold"
+                android:layout_marginRight="20dp"
+                />
 
-    <RatingBar
-        style="@style/Detail"
-        android:id="@+id/ratingBar"
-        android:rating="4"
-        android:layout_alignParentBottom="true"/>
+            <TextView
+                android:text="2015-01-01"
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"/>
 
-    <ImageView
-        style="@style/Detail"
-        android:id="@+id/imageView_poster"
-        android:layout_below="@+id/textView_synopsis"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="92dp" />
+            <TextView
+                style="@style/Detail"
+                android:text="Minions Stuart, Kevin and Bob are recruited by Scarlet Overkill, a super-villain who, alongside her inventor husband Herb, hatches a plot to take over the world"
+                android:id="@+id/textView_synopsis"
+                android:textIsSelectable="true"
+                android:layout_below="@+id/textview_movie_name"
+                />
 
-    <TextView
-        style="@style/Detail"
-        android:text="Release:"
-        android:id="@+id/textView_Release"
-        android:layout_above="@+id/ratingBar"
-        android:paddingRight="2dp"/>
+            <RatingBar
+                style="@style/Detail"
+                android:id="@+id/ratingBar"
+                android:rating="4"
+                android:isIndicator="true"/>
 
-    <TextView
-        android:text="2015-01-01"
-        android:id="@+id/textView3"
-        android:layout_above="@+id/ratingBar"
-        android:layout_toRightOf="@+id/textView_Release"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"/>
-
-</RelativeLayout>
+            <ImageView
+                style="@style/Detail"
+                android:layout_width="fill_parent"
+                android:id="@+id/imageView_poster"
+                />
+    </LinearLayout>
+</ScrollView>
