@@ -24,4 +24,13 @@ public class MoviesJsonParser {
         }
     }
 
+    public Movie[] Parse(String json)
+    {
+        Movie[] result = new Movie[2];
+
+        result[0] = new Movie();
+        result[1] = new Movie();
+
+        return result;
+    }
 }
