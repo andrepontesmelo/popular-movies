@@ -5,6 +5,7 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_main_activity_fragment">MainActivityFragment</string>
     <string name="pref_sort_key">pref_sort</string>
+    <string name="pref_sort_default">Popularity</string>
     <string name="pref_sort_entries">pref_sort_entries</string>
     <string-array name="empty_array"></string-array>
 

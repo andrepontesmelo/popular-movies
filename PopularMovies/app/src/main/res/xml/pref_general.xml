@@ -5,5 +5,5 @@
         android:title="Sort by"
         android:entries="@array/sort_options"
         android:entryValues="@array/sort_options"
-        android:defaultValue="Popularity"/>
+        android:defaultValue="@string/pref_sort_default"/>
 </PreferenceScreen>
