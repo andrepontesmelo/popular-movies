@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class MoviesJsonParser {
@@ -31,8 +33,7 @@ public class MoviesJsonParser {
     }
 
     public ArrayList<Movie> Parse(String json)
-            throws JSONException
-    {
+            throws JSONException, ParseException {
         ArrayList<Movie> result = new ArrayList<Movie>();
 
         JSONObject root = new JSONObject(json);
@@ -46,6 +47,9 @@ public class MoviesJsonParser {
             result.add(movie);
 
             movie.setTitle(currentJson.getString("title"));
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            movie.setReleaseDate(format.parse(currentJson.getString("release_date")));
         }
 
         return result;
