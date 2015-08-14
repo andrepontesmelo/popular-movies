@@ -60,6 +60,8 @@ public class MoviesJsonParser {
         movie.setReleaseDate(format.parse(currentJson.getString("release_date")));
 
         movie.setPosterUrl(currentJson.getString("poster_path"));
+
+        movie.setVoteAvg((float) currentJson.getDouble("vote_average"));
         return movie;
     }
 }

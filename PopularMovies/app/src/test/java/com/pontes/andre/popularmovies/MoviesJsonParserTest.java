@@ -48,4 +48,13 @@ public class MoviesJsonParserTest {
 
         Assert.assertEquals("/5JU9ytZJyR3zmClGmVm9q4Geqbd.jpg", result.get(1).getPosterUrl());
     }
+
+    @Test
+    public void testShouldParseVoteAvg() throws Exception {
+
+        ArrayList<Movie> result = parser.Parse(testInput);
+
+        Assert.assertEquals(6.9f, result.get(2).getVoteAvg());
+    }
+
 }
