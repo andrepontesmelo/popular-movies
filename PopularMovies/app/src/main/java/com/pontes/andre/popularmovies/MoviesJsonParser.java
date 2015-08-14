@@ -1,5 +1,9 @@
 package com.pontes.andre.popularmovies;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class MoviesJsonParser {
@@ -27,11 +31,16 @@ public class MoviesJsonParser {
     }
 
     public ArrayList<Movie> Parse(String json)
+            throws JSONException
     {
         ArrayList<Movie> result = new ArrayList<Movie>();
 
-        result.add(new Movie());
-        result.add(new Movie());
+        JSONObject root = new JSONObject(json);
+
+        JSONArray movies = root.getJSONArray("results");
+
+        for (int x = 0; x < movies.length(); x++)
+            result.add(new Movie());
 
         return result;
     }
