@@ -9,18 +9,21 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class ImageAdapter extends BaseAdapter {
 
-    private MoviesJsonParser parser = new MoviesJsonParser();
+    private ArrayList<Movie> movies;
 
-    private Context mContext;
+    private Context context;
 
-    public ImageAdapter(Context c) {
-        mContext = c;
+    public ImageAdapter(Context context, ArrayList<Movie> movies) {
+        this.context = context;
+        this.movies = movies;
     }
 
     public int getCount() {
-        return 6;
+        return movies.size();
     }
 
     public Object getItem(int position) {
@@ -35,7 +38,7 @@ public class ImageAdapter extends BaseAdapter {
         ImageView imageView;
         if (convertView == null) {
 
-            imageView = new ImageView(mContext);
+            imageView = new ImageView(context);
             imageView.setLayoutParams(new GridView.LayoutParams(300, 400));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -45,7 +48,7 @@ public class ImageAdapter extends BaseAdapter {
         }
 
         Picasso.with(parent.getContext())
-                .load(parser.getImageUrl(position))
+                .load(movies.get(position).getCompletePosterUrl())
                 .into(imageView);
 
         return imageView;

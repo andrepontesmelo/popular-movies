@@ -50,4 +50,9 @@ public class Movie implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getCompletePosterUrl() {
+        return "http://image.tmdb.org/t/p/w500" + posterUrl;
+    }
+
 }

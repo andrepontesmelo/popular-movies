@@ -10,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class MainActivityFragment extends Fragment {
+
+    private ImageAdapter imageAdapter;
+    private GridView gridview;
 
     public MainActivityFragment() {
     }
@@ -25,9 +28,11 @@ public class MainActivityFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_main_activity, container, false);
 
-        GridView gridview = (GridView) view.findViewById(R.id.gridview);
+        gridview = (GridView) view.findViewById(R.id.gridview);
 
-        gridview.setAdapter(new ImageAdapter(view.getContext()));
+        imageAdapter = new ImageAdapter(view.getContext(), new ArrayList<Movie>());
+
+        gridview.setAdapter(imageAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -42,7 +47,6 @@ public class MainActivityFragment extends Fragment {
         });
 
         updateMovies(getOrder());
-
 
         return view;
     }
@@ -66,7 +70,8 @@ public class MainActivityFragment extends Fragment {
     }
 
     private void updateMovies(OrderEnum order) {
-
+        FetchMoviesTask task = new FetchMoviesTask(imageAdapter, gridview, getActivity());
+        task.execute(order);
     }
 
     private Movie getMovie()
