@@ -43,17 +43,23 @@ public class MoviesJsonParser {
         for (int x = 0; x < movies.length(); x++) {
             JSONObject currentJson = movies.getJSONObject(x);
 
-            Movie movie = new Movie();
+            Movie movie = getMovie(currentJson);
+
             result.add(movie);
-
-            movie.setTitle(currentJson.getString("title"));
-
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            movie.setReleaseDate(format.parse(currentJson.getString("release_date")));
-
-            movie.setPosterUrl(currentJson.getString("poster_path"));
         }
 
         return result;
+    }
+
+    private Movie getMovie(JSONObject currentJson) throws JSONException, ParseException {
+        Movie movie = new Movie();
+
+        movie.setTitle(currentJson.getString("title"));
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        movie.setReleaseDate(format.parse(currentJson.getString("release_date")));
+
+        movie.setPosterUrl(currentJson.getString("poster_path"));
+        return movie;
     }
 }
