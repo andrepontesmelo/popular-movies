@@ -41,4 +41,11 @@ public class MoviesJsonParserTest {
         Assert.assertEquals(expected, result.get(1).getReleaseDate());
     }
 
+    @Test
+    public void testShouldParsePosterUrl() throws Exception {
+
+        ArrayList<Movie> result = parser.Parse(testInput);
+
+        Assert.assertEquals("/5JU9ytZJyR3zmClGmVm9q4Geqbd.jpg", result.get(1).getPosterUrl());
+    }
 }

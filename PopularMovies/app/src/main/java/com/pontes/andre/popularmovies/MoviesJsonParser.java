@@ -50,6 +50,8 @@ public class MoviesJsonParser {
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             movie.setReleaseDate(format.parse(currentJson.getString("release_date")));
+
+            movie.setPosterUrl(currentJson.getString("poster_path"));
         }
 
         return result;
