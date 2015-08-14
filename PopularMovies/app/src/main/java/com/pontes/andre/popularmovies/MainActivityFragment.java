@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
 public class MainActivityFragment extends Fragment {
 
@@ -29,10 +28,6 @@ public class MainActivityFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_main_activity, container, false);
 
         gridview = (GridView) view.findViewById(R.id.gridview);
-
-        imageAdapter = new ImageAdapter(view.getContext(), new ArrayList<Movie>());
-
-        gridview.setAdapter(imageAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -63,7 +58,7 @@ public class MainActivityFragment extends Fragment {
             case ("Popularity"):
                 return OrderEnum.Popularity;
             case "Highest Rated":
-                return OrderEnum.MostRated;
+                return OrderEnum.HighestRated;
             default:
                 throw new UnsupportedOperationException();
         }
