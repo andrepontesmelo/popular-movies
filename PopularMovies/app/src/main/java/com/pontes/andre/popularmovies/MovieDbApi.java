@@ -27,7 +27,7 @@ public class MovieDbApi {
 
         StringBuilder builder = new StringBuilder(baseUrl);
 
-        builder.append(orderBy == OrderEnum.MostRated ? "top_rated" : "popular");
+        builder.append(orderBy == OrderEnum.HighestRated ? "top_rated" : "popular");
 
         builder.append("?api_key=");
 
