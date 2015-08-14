@@ -62,6 +62,9 @@ public class MoviesJsonParser {
         movie.setPosterUrl(currentJson.getString("poster_path"));
 
         movie.setVoteAvg((float) currentJson.getDouble("vote_average"));
+
+        movie.setSynopsis(currentJson.getString("overview"));
+        
         return movie;
     }
 }

@@ -57,4 +57,13 @@ public class MoviesJsonParserTest {
         Assert.assertEquals(6.9f, result.get(2).getVoteAvg());
     }
 
+    @Test
+    public void testShouldParseSynopsis() throws Exception {
+
+        ArrayList<Movie> result = parser.Parse(testInput);
+
+        String expectedSynopsis = "Armed with the astonishing ability to shrink in scale but increase in strength, con-man Scott Lang must embrace his inner-hero and help his mentor, Dr. Hank Pym, protect the secret behind his spectacular Ant-Man suit from a new generation of towering threats. Against seemingly insurmountable obstacles, Pym and Lang must plan and pull off a heist that will save the world.";
+
+        Assert.assertEquals(expectedSynopsis, result.get(0).getSynopsis());
+    }
 }
