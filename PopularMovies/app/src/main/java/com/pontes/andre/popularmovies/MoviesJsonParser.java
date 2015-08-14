@@ -1,5 +1,7 @@
 package com.pontes.andre.popularmovies;
 
+import java.util.ArrayList;
+
 public class MoviesJsonParser {
     public String getImageUrl (int position)
     {
@@ -24,12 +26,12 @@ public class MoviesJsonParser {
         }
     }
 
-    public Movie[] Parse(String json)
+    public ArrayList<Movie> Parse(String json)
     {
-        Movie[] result = new Movie[2];
+        ArrayList<Movie> result = new ArrayList<Movie>();
 
-        result[0] = new Movie();
-        result[1] = new Movie();
+        result.add(new Movie());
+        result.add(new Movie());
 
         return result;
     }
