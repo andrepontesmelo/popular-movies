@@ -1,8 +1,11 @@
 package com.pontes.andre.popularmovies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.io.BufferedReader;
@@ -86,11 +89,23 @@ public class FetchMoviesTask extends AsyncTask<OrderEnum, Void, ArrayList<Movie>
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Movie> movies) {
+    protected void onPostExecute(final ArrayList<Movie> movies) {
 
         imageAdapter = new ImageAdapter(context, movies);
 
         gridView.setAdapter(imageAdapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                Intent details = new Intent(context, DetailActivity.class);
+
+                details.putExtra("movie", movies.get(position));
+
+                context.startActivity(details);
+            }
+        });
+
 
         super.onPostExecute(movies);
     }

@@ -29,7 +29,7 @@ public class DetailActivity extends AppCompatActivity {
         ImageView imageView = (ImageView) findViewById(R.id.imageView_poster);
 
         Picasso.with(this)
-                .load(movie.getPosterUrl())
+                .load(movie.getCompletePosterUrl())
                 .into(imageView);
 
         setTitle("Synopsis");
