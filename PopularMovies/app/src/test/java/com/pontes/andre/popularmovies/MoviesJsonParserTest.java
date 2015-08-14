@@ -54,7 +54,7 @@ public class MoviesJsonParserTest {
 
         ArrayList<Movie> result = parser.Parse(testInput);
 
-        Assert.assertEquals(6.9f, result.get(2).getVoteAvg());
+        Assert.assertEquals(6.9f, result.get(2).getVoteAvgInTen());
     }
 
     @Test

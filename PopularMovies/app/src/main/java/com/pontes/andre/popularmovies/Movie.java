@@ -8,7 +8,9 @@ public class Movie implements Serializable {
     private String title;
     private Date releaseDate;
     private String posterUrl;
-    private float voteAvg;
+
+    private float voteAvgInTen;
+
     private String synopsis;
 
     public String getSynopsis() {
@@ -19,12 +21,16 @@ public class Movie implements Serializable {
         this.synopsis = synopsis;
     }
 
-    public float getVoteAvg() {
-        return voteAvg;
+    public float getVoteAvgInTen() {
+        return voteAvgInTen;
     }
 
-    public void setVoteAvg(float voteAvg) {
-        this.voteAvg = voteAvg;
+    public float getVoteAvgInFive() {
+        return voteAvgInTen / 2;
+    }
+
+    public void setVoteAvgInTen(float voteAvgInTen) {
+        this.voteAvgInTen = voteAvgInTen;
     }
 
     public String getPosterUrl() {
@@ -52,7 +58,7 @@ public class Movie implements Serializable {
     }
 
     public String getCompletePosterUrl() {
-        return "http://image.tmdb.org/t/p/w500" + posterUrl;
+        return "http://image.tmdb.org/t/p/w185" + posterUrl;
     }
 
 }

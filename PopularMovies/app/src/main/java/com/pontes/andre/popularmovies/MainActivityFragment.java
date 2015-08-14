@@ -75,7 +75,7 @@ public class MainActivityFragment extends Fragment {
         movie.setTitle("Minions");
         movie.setReleaseDate(Date.valueOf("2015-07-10"));
         movie.setPosterUrl("http://image.tmdb.org/t/p/w500/qARJ35IrJNFzFWQGcyWP4r1jyXE.jpg");
-        movie.setVoteAvg(6.5f);
+        movie.setVoteAvgInTen(6.5f);
         movie.setSynopsis("Minions Stuart, Kevin and Bob are recruited by Scarlet Overkill, a " +
                 " super-villain who, alongside her inventor husband Herb, " +
                 " hatches a plot to take over the world");
