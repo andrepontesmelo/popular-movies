@@ -60,5 +60,4 @@ public class Movie implements Serializable {
     public String getCompletePosterUrl() {
         return "http://image.tmdb.org/t/p/w185" + posterUrl;
     }
-
 }
