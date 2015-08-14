@@ -20,4 +20,12 @@ public class MoviesJsonParserTest extends TestCase {
 
         Assert.assertEquals(20, result.size());
     }
+
+    @Test
+    public void testShouldParseMovieTitle() throws Exception {
+
+        ArrayList<Movie> result = parser.Parse(testInput);
+
+        Assert.assertEquals("Ant-Man", result.get(0).getTitle());
+    }
 }

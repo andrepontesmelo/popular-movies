@@ -39,8 +39,14 @@ public class MoviesJsonParser {
 
         JSONArray movies = root.getJSONArray("results");
 
-        for (int x = 0; x < movies.length(); x++)
-            result.add(new Movie());
+        for (int x = 0; x < movies.length(); x++) {
+            JSONObject currentJson = movies.getJSONObject(x);
+
+            Movie movie = new Movie();
+            result.add(movie);
+
+            movie.setTitle(currentJson.getString("title"));
+        }
 
         return result;
     }
