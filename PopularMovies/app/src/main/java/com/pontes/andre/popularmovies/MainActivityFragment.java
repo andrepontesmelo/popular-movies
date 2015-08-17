@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import java.sql.Date;
-
 public class MainActivityFragment extends Fragment {
 
     private ImageAdapter imageAdapter;
@@ -41,8 +39,6 @@ public class MainActivityFragment extends Fragment {
                                     int position, long id) {
 
                 Intent details = new Intent(getActivity(), DetailActivity.class);
-
-                details.putExtra("movie", getMovie());
 
                 startActivity(details);
             }
@@ -76,17 +72,4 @@ public class MainActivityFragment extends Fragment {
         task.execute(order);
     }
 
-    private Movie getMovie()
-    {
-        Movie movie = new Movie();
-        movie.setTitle("Minions");
-        movie.setReleaseDate(Date.valueOf("2015-07-10"));
-        movie.setPosterUrl("http://image.tmdb.org/t/p/w500/qARJ35IrJNFzFWQGcyWP4r1jyXE.jpg");
-        movie.setVoteAvgInTen(6.5f);
-        movie.setSynopsis("Minions Stuart, Kevin and Bob are recruited by Scarlet Overkill, a " +
-                " super-villain who, alongside her inventor husband Herb, " +
-                " hatches a plot to take over the world");
-
-        return movie;
-    }
 }
