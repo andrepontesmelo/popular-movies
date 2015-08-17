@@ -20,8 +20,14 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
     private ImageAdapter imageAdapter;
     private GridView gridview;
 
-    private ArrayList<Movie> movies;
+    private ArrayList<Movie> movies = null;
 
+    private OrderEnum lastOrder;
+
+    private boolean userHasChangedOrder()
+    {
+        return lastOrder != null && (lastOrder != getOrder());
+    }
 
     public MainActivityFragment() {
     }
@@ -30,7 +36,8 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
     public void onStart() {
         super.onStart();
 
-        updateMovies(getOrder());
+        if (userHasChangedOrder())
+            updateMovies(getOrder());
     }
 
     @Override
@@ -38,14 +45,7 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
         super.onSaveInstanceState(outState);
 
         outState.putParcelableArrayList("movies", movies);
-    }
-
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-
-        if (savedInstanceState != null)
-            movies = savedInstanceState.getParcelableArrayList("movies");
+        outState.putSerializable("lastOrder", lastOrder);
     }
 
     @Override
@@ -65,6 +65,13 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
                 startActivity(details);
             }
         });
+
+        if (savedInstanceState != null) {
+            movies = savedInstanceState.getParcelableArrayList("movies");
+            lastOrder = (OrderEnum) savedInstanceState.getSerializable("lastOrder");
+            updateAdapter((ArrayList<Movie>) movies);
+        } else
+            updateMovies(getOrder());
 
         return view;
     }
@@ -88,35 +95,43 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
     }
 
     private void updateMovies(OrderEnum order) {
+
         FetchMoviesTask task = new FetchMoviesTask(this);
         task.execute(order);
+
+        lastOrder = order;
+    }
+
+    public void updateAdapter(final ArrayList<Movie> movies) {
+        {
+            final Activity context = getActivity();
+
+            if (movies != null) {
+
+                this.movies = movies;
+
+                imageAdapter = new ImageAdapter(context, movies);
+
+                gridview.setAdapter(imageAdapter);
+
+                gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                        Intent details = new Intent(context, DetailActivity.class);
+
+                        details.putExtra("movie", movies.get(position));
+
+                        context.startActivity(details);
+                    }
+                });
+
+            } else
+                Toast.makeText(context, "Internet not available", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
-    public void onTaskCompleted(Object result) {
-        final ArrayList<Movie> movies = (ArrayList<Movie>) result;
-
-        final Activity context = getActivity();
-
-        this.movies = movies;
-
-        if (movies != null) {
-
-            imageAdapter = new ImageAdapter(context, movies);
-
-            gridview.setAdapter(imageAdapter);
-
-            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-                    Intent details = new Intent(context, DetailActivity.class);
-
-                    details.putExtra("movie", movies.get(position));
-
-                    context.startActivity(details);
-                }
-            });
-        } else
-            Toast.makeText(context, "Internet not available", Toast.LENGTH_LONG).show();
+    public void onTaskCompleted(Object movieArray) {
+        updateAdapter((ArrayList<Movie>) movieArray);
     }
 }
