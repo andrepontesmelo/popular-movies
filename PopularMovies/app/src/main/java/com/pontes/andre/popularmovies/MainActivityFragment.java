@@ -66,8 +66,6 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
             }
         });
 
-        updateMovies(getOrder());
-
         return view;
     }
 
