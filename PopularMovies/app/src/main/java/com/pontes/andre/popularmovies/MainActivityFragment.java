@@ -1,5 +1,6 @@
 package com.pontes.andre.popularmovies;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
-public class MainActivityFragment extends Fragment {
+import java.util.ArrayList;
+
+public class MainActivityFragment extends Fragment implements ICompletableTask {
 
     private ImageAdapter imageAdapter;
     private GridView gridview;
@@ -68,8 +72,32 @@ public class MainActivityFragment extends Fragment {
     }
 
     private void updateMovies(OrderEnum order) {
-        FetchMoviesTask task = new FetchMoviesTask(imageAdapter, gridview, getActivity());
+        FetchMoviesTask task = new FetchMoviesTask(this);
         task.execute(order);
     }
 
+    @Override
+    public void onTaskCompleted(Object result) {
+        final ArrayList<Movie> movies = (ArrayList<Movie>) result;
+
+        final Activity context = getActivity();
+
+        if (movies != null) {
+            imageAdapter = new ImageAdapter(context, movies);
+
+            gridview.setAdapter(imageAdapter);
+
+            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                    Intent details = new Intent(context, DetailActivity.class);
+
+                    details.putExtra("movie", movies.get(position));
+
+                    context.startActivity(details);
+                }
+            });
+        } else
+            Toast.makeText(context, "Internet not available", Toast.LENGTH_LONG).show();
+    }
 }
