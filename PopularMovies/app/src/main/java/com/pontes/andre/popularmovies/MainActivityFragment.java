@@ -37,7 +37,7 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putSerializable("movies", movies);
+        outState.putParcelableArrayList("movies", movies);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
         super.onViewStateRestored(savedInstanceState);
 
         if (savedInstanceState != null)
-            movies = (ArrayList<Movie>) savedInstanceState.getSerializable("movies");
+            movies = savedInstanceState.getParcelableArrayList("movies");
     }
 
     @Override

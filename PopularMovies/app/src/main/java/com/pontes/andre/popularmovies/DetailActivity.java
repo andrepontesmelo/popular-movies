@@ -37,6 +37,6 @@ public class DetailActivity extends AppCompatActivity {
 
     private Movie getMovie()
     {
-        return (Movie) this.getIntent().getSerializableExtra("movie");
+        return (Movie) this.getIntent().getParcelableExtra("movie");
     }
 }
