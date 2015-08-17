@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -91,20 +92,24 @@ public class FetchMoviesTask extends AsyncTask<OrderEnum, Void, ArrayList<Movie>
     @Override
     protected void onPostExecute(final ArrayList<Movie> movies) {
 
-        imageAdapter = new ImageAdapter(context, movies);
+        if (movies != null) {
+            imageAdapter = new ImageAdapter(context, movies);
 
-        gridView.setAdapter(imageAdapter);
+            gridView.setAdapter(imageAdapter);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                Intent details = new Intent(context, DetailActivity.class);
+                    Intent details = new Intent(context, DetailActivity.class);
 
-                details.putExtra("movie", movies.get(position));
+                    details.putExtra("movie", movies.get(position));
 
-                context.startActivity(details);
-            }
-        });
+                    context.startActivity(details);
+                }
+            });
+        } else
+            Toast.makeText(context, "Internet not available", Toast.LENGTH_LONG).show();
+
 
 
         super.onPostExecute(movies);
