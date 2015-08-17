@@ -20,6 +20,9 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
     private ImageAdapter imageAdapter;
     private GridView gridview;
 
+    private ArrayList<Movie> movies;
+
+
     public MainActivityFragment() {
     }
 
@@ -28,6 +31,21 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
         super.onStart();
 
         updateMovies(getOrder());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putSerializable("movies", movies);
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if (savedInstanceState != null)
+            movies = (ArrayList<Movie>) savedInstanceState.getSerializable("movies");
     }
 
     @Override
@@ -82,7 +100,10 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
 
         final Activity context = getActivity();
 
+        this.movies = movies;
+
         if (movies != null) {
+
             imageAdapter = new ImageAdapter(context, movies);
 
             gridview.setAdapter(imageAdapter);
