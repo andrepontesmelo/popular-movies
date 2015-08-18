@@ -34,6 +34,8 @@ public class MoviesJsonParser {
 
         movie.setTitle(currentJson.getString("title"));
 
+        movie.setId(currentJson.getLong("id"));
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         movie.setReleaseDate(format.parse(currentJson.getString("release_date")));
 

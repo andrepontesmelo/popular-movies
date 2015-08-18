@@ -12,14 +12,10 @@ public class Movie implements Parcelable {
     private String synopsis;
     private float voteAvgInTen;
     private Date releaseDate;
+    private long id;
 
-
-    public String getSynopsis() {
-        return synopsis;
-    }
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
-    }
+    public String getSynopsis() { return synopsis; }
+    public void setSynopsis(String synopsis) { this.synopsis = synopsis; }
     public float getVoteAvgInTen() {
         return voteAvgInTen;
     }
@@ -50,6 +46,8 @@ public class Movie implements Parcelable {
     public String getCompletePosterUrl() {
         return "http://image.tmdb.org/t/p/w185" + posterUrl;
     }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
     @Override
     public int describeContents() {
@@ -62,6 +60,7 @@ public class Movie implements Parcelable {
         out.writeString(synopsis);
         out.writeFloat(voteAvgInTen);
         out.writeSerializable(releaseDate);
+        out.writeLong(id);
     }
 
     public Movie()
@@ -74,6 +73,7 @@ public class Movie implements Parcelable {
         synopsis = in.readString();
         voteAvgInTen = in.readFloat();
         releaseDate = (Date) in.readSerializable();
+        id = in.readLong();
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

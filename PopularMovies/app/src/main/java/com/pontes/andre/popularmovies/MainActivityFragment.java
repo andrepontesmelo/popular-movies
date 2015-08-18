@@ -126,7 +126,7 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
                 });
 
             } else
-                Toast.makeText(context, "Internet not available", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, getString(R.string.no_internet), Toast.LENGTH_LONG).show();
         }
     }
 

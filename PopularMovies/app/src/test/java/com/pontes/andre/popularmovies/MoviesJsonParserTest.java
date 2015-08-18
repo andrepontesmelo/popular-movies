@@ -66,4 +66,13 @@ public class MoviesJsonParserTest {
 
         Assert.assertEquals(expectedSynopsis, result.get(0).getSynopsis());
     }
+
+    @Test
+    public void testShouldParseMovieId() throws Exception {
+
+        ArrayList<Movie> result = parser.Parse(testInput);
+
+        Assert.assertEquals(102899, result.get(0).getId());
+    }
+
 }

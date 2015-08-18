@@ -1,14 +1,22 @@
 package com.pontes.andre.popularmovies;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-public class DetailActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class DetailActivity extends AppCompatActivity implements ICompletableTask {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +41,35 @@ public class DetailActivity extends AppCompatActivity {
                 .into(imageView);
 
         setTitle("Synopsis");
+
+        FetchTrailersTask task = new FetchTrailersTask(this);
+        task.execute(movie.getId());
     }
 
-    private Movie getMovie()
-    {
+    private Movie getMovie() {
+
         return (Movie) this.getIntent().getParcelableExtra("movie");
+    }
+
+    @Override
+    public void onTaskCompleted(Object result) {
+
+        if (result != null) {
+            ArrayList<String> listUrls = (ArrayList<String>) result;
+
+            final String firstUrl = listUrls.get(0);
+
+            Button btn = (Button) findViewById(R.id.button_play_movie_trailer);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(firstUrl)));
+                }
+            });
+
+        } else
+        {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_LONG);
+        }
     }
 }

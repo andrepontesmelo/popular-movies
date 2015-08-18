@@ -38,10 +38,17 @@
                 android:rating="4"
                 android:isIndicator="true"/>
 
-            <ImageView
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/abc_ic_go_search_api_mtrl_alpha"
+            />
+
+        <ImageView
                 style="@style/Detail"
                 android:layout_width="fill_parent"
                 android:id="@+id/imageView_poster"
                 />
+
     </LinearLayout>
 </ScrollView>
