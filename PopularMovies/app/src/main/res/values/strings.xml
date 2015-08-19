@@ -8,6 +8,7 @@
     <string name="pref_sort_default">Popularity</string>
     <string name="pref_sort_entries">pref_sort_entries</string>
     <string name="no_internet">No internet connection</string>
+    <string name="synopsis">Synopsis</string>
     <string-array name="empty_array"></string-array>
 
     <string-array name="sort_options">
