@@ -2,10 +2,6 @@ package com.pontes.andre.popularmovies;
 
 public class MovieDbApi {
 
-    private String key = "YOUR PRIVATE KEY HERE - DO NOT COMMIT TO GIT";
-
-    private String baseUrl = "http://api.themoviedb.org/3/movie/";
-
     private MovieDbApi() {
     }
 
@@ -20,19 +16,23 @@ public class MovieDbApi {
     }
 
     public String getKey() {
+        String key = "###";
+
         return key;
     }
 
     public String getUrl(OrderEnum orderBy) {
 
-        StringBuilder builder = new StringBuilder(baseUrl);
+        String baseUrl = "http://api.themoviedb.org/3/movie/";
 
-        builder.append(orderBy == OrderEnum.HighestRated ? "top_rated" : "popular");
-
-        builder.append("?api_key=");
-
-        builder.append(getKey());
-
-        return builder.toString();
+        return baseUrl + (orderBy == OrderEnum.HighestRated ? "top_rated" : "popular") + "?api_key=" + getKey();
     }
+
+    public String getTrailerUrl(long movieId) {
+
+        String baseUrl = "http://api.themoviedb.org/3/movie/";
+
+        return baseUrl + Long.valueOf(movieId) + "/videos?api_key=" + getKey();
+    }
+
 }
