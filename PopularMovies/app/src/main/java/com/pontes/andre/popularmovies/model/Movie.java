@@ -3,6 +3,8 @@ package com.pontes.andre.popularmovies.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.pontes.andre.popularmovies.provider.movie.MovieContentValues;
+
 import java.util.Date;
 
 public class Movie implements Parcelable {
@@ -13,15 +15,13 @@ public class Movie implements Parcelable {
     private float voteAvgInTen;
     private Date releaseDate;
     private long id;
+    private boolean favorite;
+
 
     public String getSynopsis() { return synopsis; }
     public void setSynopsis(String synopsis) { this.synopsis = synopsis; }
-    public float getVoteAvgInTen() {
-        return voteAvgInTen;
-    }
-    public float getVoteAvgInFive() {
-        return voteAvgInTen / 2;
-    }
+    public float getVoteAvgInTen() { return voteAvgInTen; }
+    public float getVoteAvgInFive() { return voteAvgInTen / 2; }
     public void setVoteAvgInTen(float voteAvgInTen) {
         this.voteAvgInTen = voteAvgInTen;
     }
@@ -48,6 +48,8 @@ public class Movie implements Parcelable {
     }
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
+    public boolean isFavorite() { return favorite; }
+    public void setFavorite(boolean favorite) { this.favorite = favorite;    }
 
     @Override
     public int describeContents() {
@@ -61,6 +63,7 @@ public class Movie implements Parcelable {
         out.writeFloat(voteAvgInTen);
         out.writeSerializable(releaseDate);
         out.writeLong(id);
+        out.writeByte((byte) (favorite ? 1 : 0));
     }
 
     public Movie()
@@ -74,6 +77,7 @@ public class Movie implements Parcelable {
         voteAvgInTen = in.readFloat();
         releaseDate = (Date) in.readSerializable();
         id = in.readLong();
+        favorite = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
@@ -85,4 +89,18 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+
+    public MovieContentValues getDbContents() {
+        MovieContentValues content = new MovieContentValues();
+
+        content.putTitle(title);
+        content.putPosterUrl(posterUrl);
+        content.putSynopsis(synopsis);
+        content.putVoteAvgInTen(voteAvgInTen);
+        content.putReleaseDate(releaseDate);
+        content.putMovieId(id);
+        content.putFavorite(favorite);
+
+        return content;
+    }
 }

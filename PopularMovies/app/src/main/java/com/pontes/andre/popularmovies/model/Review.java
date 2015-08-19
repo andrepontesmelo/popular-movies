@@ -1,5 +1,7 @@
 package com.pontes.andre.popularmovies.model;
 
+import com.pontes.andre.popularmovies.provider.review.ReviewContentValues;
+
 public class Review {
     private String author;
     private String content;
@@ -18,5 +20,14 @@ public class Review {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public ReviewContentValues getDbContents() {
+        ReviewContentValues contentValues = new ReviewContentValues();
+
+        contentValues.putAuthor(author);
+        contentValues.putContent(content);
+
+        return contentValues;
     }
 }
