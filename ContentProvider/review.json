@@ -1,0 +1,19 @@
+{
+	"fields": [
+		{
+			"name": "movie_id",
+			"type": "Long",
+			"nullable": false
+		},
+		{
+			"name": "author",
+			"type": "String",
+			"nullable": false
+		},
+		{
+			"name": "content",
+			"type": "String",
+			"nullable": false
+		}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"fields": [
+		{
+			"name": "movie_id",
+			"type": "Long",
+			"nullable": false
+		},
+		{
+			"name": "youtube_key",
+			"type": "String",
+			"nullable": false
+		}
+	]
+}

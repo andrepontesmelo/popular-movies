@@ -1,0 +1,40 @@
+{
+	"fields": [
+		{
+			"name": "title",
+			"type": "String",
+			"nullable": false
+		},
+		{
+			"name": "poster_url",
+			"type": "String",
+			"nullable": false
+		},
+		{
+			"name": "synopsis",
+			"type": "String",
+			"nullable": false
+		},
+		{
+			"name": "vote_avg_in_ten",
+			"type": "Float",
+			"nullable": true
+		},
+		{
+			"name": "release_date",
+			"type": "Date",
+			"nullable": false,
+		},
+		{
+			"name": "movie_id",
+			"type": "Long",
+			"nullable": false,
+			"index": true
+		},
+		{
+			"name": "favorite",
+			"type": "Boolean",
+			"nullable": false
+		}
+	]
+}

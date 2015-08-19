@@ -1,0 +1,13 @@
+{
+	"syntaxVersion": "3",
+	"projectPackageId": "com.pontes.andre.popularmovies",
+	"authority": "com.pontes.andre.popularmovies.provider",
+	"providerJavaPackage": "com.pontes.andre.popularmovies.provider",
+	"providerClassName": "PopularMovieProvider",
+	"sqliteOpenHelperClassName": "PopularMovieSQLiteOpenHelper",
+	"sqliteOpenHelperCallbacksClassName": "PopularMovieSQLiteOpenHelperCallbacks",
+	"databaseFileName": "popularmovies.db",
+	"databaseVersion": 1,
+	"enableForeignKeys": true,
+	"useAnnotations": true
+}

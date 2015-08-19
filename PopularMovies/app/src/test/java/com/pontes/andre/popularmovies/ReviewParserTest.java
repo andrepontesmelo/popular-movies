@@ -38,6 +38,4 @@ public class ReviewParserTest {
         Assert.assertEquals("Fabulous action movie. Lots of interesting characters. They don't make many movies like this. The whole movie from start to finish was entertaining I'm looking forward to seeing it again. I definitely recommend seeing it.",
                 result.get(0).getContent());
     }
-
-
 }

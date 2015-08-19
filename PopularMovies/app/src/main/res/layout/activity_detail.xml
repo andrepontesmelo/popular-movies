@@ -10,7 +10,14 @@
         tools:context="com.pontes.andre.popularmovies.DetailActivity"
         android:id="@+id/linear_details">
 
-            <TextView
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton_favorite"
+            android:src="@drawable/abc_btn_rating_star_off_mtrl_alpha"
+            />
+
+        <TextView
                 style="@style/Detail"
                 android:id="@+id/textview_movie_name"
                 android:text="Minions"
