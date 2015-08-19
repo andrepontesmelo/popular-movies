@@ -5,8 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,15 +58,21 @@ public class DetailActivity extends AppCompatActivity implements ICompletableTas
         if (result != null) {
             ArrayList<String> listUrls = (ArrayList<String>) result;
 
-            final String firstUrl = listUrls.get(0);
+            for (final String url : listUrls) {
 
-            Button btn = (Button) findViewById(R.id.button_play_movie_trailer);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(firstUrl)));
-                }
-            });
+                ImageButton newButton = (ImageButton) getLayoutInflater().inflate(R.layout.button_youtube, null);
+
+                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear_details);
+
+                linearLayout.addView(newButton);
+
+                newButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    }
+                });
+            }
 
         } else
         {
