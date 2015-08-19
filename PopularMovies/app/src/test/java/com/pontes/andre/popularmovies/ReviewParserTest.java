@@ -22,4 +22,22 @@ public class ReviewParserTest {
 
         Assert.assertEquals(2, result.size());
     }
+    @Test
+    public void testShouldParseAutor() throws Exception {
+
+        ArrayList<Review> result = parser.Parse(testInput);
+
+        Assert.assertEquals("Phileas Fogg", result.get(0).getAuthor());
+    }
+
+    @Test
+    public void testShouldParseContent() throws Exception {
+
+        ArrayList<Review> result = parser.Parse(testInput);
+
+        Assert.assertEquals("Fabulous action movie. Lots of interesting characters. They don't make many movies like this. The whole movie from start to finish was entertaining I'm looking forward to seeing it again. I definitely recommend seeing it.",
+                result.get(0).getContent());
+    }
+
+
 }

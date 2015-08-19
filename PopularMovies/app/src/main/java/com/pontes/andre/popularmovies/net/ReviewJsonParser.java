@@ -22,12 +22,21 @@ public class ReviewJsonParser {
         for (int x = 0; x < reviews.length(); x++) {
             JSONObject currentJson = reviews.getJSONObject(x);
 
-            // String movieUrl = getMovieUrl(currentJson);
+            Review review = getReview(currentJson);
 
-            //result.add(movieUrl);
+            result.add(review);
         }
 
 
         return result;
+    }
+
+    private Review getReview(JSONObject jsonObject) throws JSONException {
+        Review review = new Review();
+
+        review.setAuthor(jsonObject.getString("author"));
+        review.setContent(jsonObject.getString("content"));
+
+        return review;
     }
 }
