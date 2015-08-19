@@ -2,16 +2,16 @@ package com.pontes.andre.popularmovies.net;
 
 import android.os.AsyncTask;
 
-import com.pontes.andre.popularmovies.ICompletableTask;
+import com.pontes.andre.popularmovies.OnTrailerFetchListener;
 
 import java.util.ArrayList;
 
 public class FetchTrailerTask extends AsyncTask<Long, Void, ArrayList<String>> {
     private final String LOG_TAG = FetchTrailerTask.class.getSimpleName();
 
-    private ICompletableTask listener;
+    private OnTrailerFetchListener listener;
 
-    public FetchTrailerTask(ICompletableTask listener)
+    public FetchTrailerTask(OnTrailerFetchListener listener)
     {
         this.listener = listener;
     }
@@ -38,7 +38,7 @@ public class FetchTrailerTask extends AsyncTask<Long, Void, ArrayList<String>> {
     @Override
     protected void onPostExecute(final ArrayList<String> movies) {
 
-        listener.onTaskCompleted(movies);
+        listener.onTrailerTaskCompleted(movies);
 
         super.onPostExecute(movies);
     }

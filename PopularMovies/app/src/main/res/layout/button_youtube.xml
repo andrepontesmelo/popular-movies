@@ -3,5 +3,4 @@
     android:layout_width="match_parent"
     android:src="@drawable/abc_ic_go_search_api_mtrl_alpha"
     android:layout_height="match_parent">
-
 </ImageButton>

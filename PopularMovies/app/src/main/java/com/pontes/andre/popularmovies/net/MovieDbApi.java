@@ -4,7 +4,9 @@ import com.pontes.andre.popularmovies.model.OrderEnum;
 
 public class MovieDbApi {
 
-    private String baseUrl = "http://api.themoviedb.org/3/movie/";
+    private String BASE_URL = "http://api.themoviedb.org/3/movie/";
+    private String API_KEY_FRAGMENT = "?api_key=";
+    private String MOVIE_DB_KEY = "###";
 
     private MovieDbApi() {
     }
@@ -20,19 +22,24 @@ public class MovieDbApi {
     }
 
     public String getKey() {
-        String key = "###";
 
-        return key;
+        return API_KEY_FRAGMENT + MOVIE_DB_KEY;
     }
 
     public String getUrl(OrderEnum orderBy) {
 
-        return baseUrl + (orderBy == OrderEnum.HighestRated ? "top_rated" : "popular") + "?api_key=" + getKey();
+        String orderByString = (orderBy == OrderEnum.HighestRated ? "top_rated" : "popular");
+
+        return BASE_URL + orderByString + getKey();
     }
 
     public String getTrailerUrl(long movieId) {
 
-        return baseUrl + Long.valueOf(movieId) + "/videos?api_key=" + getKey();
+        return BASE_URL + Long.valueOf(movieId) + "/videos" + getKey();
     }
 
+    public String getReviewUrl(long movieId) {
+
+        return BASE_URL + Long.valueOf(movieId) + "/reviews" + getKey();
+    }
 }

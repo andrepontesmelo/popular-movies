@@ -2,7 +2,7 @@ package com.pontes.andre.popularmovies.net;
 
 import android.os.AsyncTask;
 
-import com.pontes.andre.popularmovies.ICompletableTask;
+import com.pontes.andre.popularmovies.OnReviewFetchListener;
 import com.pontes.andre.popularmovies.model.Review;
 
 import java.util.ArrayList;
@@ -10,9 +10,9 @@ import java.util.ArrayList;
 public class FetchReviewTask extends AsyncTask<Long, Void, ArrayList<Review>> {
     private final String LOG_TAG = FetchReviewTask.class.getSimpleName();
 
-    private ICompletableTask listener;
+    private OnReviewFetchListener listener;
 
-    public FetchReviewTask(ICompletableTask listener)
+    public FetchReviewTask(OnReviewFetchListener listener)
     {
         this.listener = listener;
     }
@@ -20,7 +20,7 @@ public class FetchReviewTask extends AsyncTask<Long, Void, ArrayList<Review>> {
     @Override
     public ArrayList<Review> doInBackground(Long... params) {
 
-        String url = MovieDbApi.getInstance().getTrailerUrl(params[0]);
+        String url = MovieDbApi.getInstance().getReviewUrl(params[0]);
 
         String moviesJsonStr = JsonFetcher.getInstance().getJsonStr(url);
 
@@ -39,7 +39,7 @@ public class FetchReviewTask extends AsyncTask<Long, Void, ArrayList<Review>> {
     @Override
     protected void onPostExecute(final ArrayList<Review> movies) {
 
-        listener.onTaskCompleted(movies);
+        listener.onReviewTaskCompleted(movies);
 
         super.onPostExecute(movies);
     }

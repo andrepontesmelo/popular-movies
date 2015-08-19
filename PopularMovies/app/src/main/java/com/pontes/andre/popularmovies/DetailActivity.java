@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,12 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pontes.andre.popularmovies.model.Movie;
+import com.pontes.andre.popularmovies.model.Review;
+import com.pontes.andre.popularmovies.net.FetchReviewTask;
 import com.pontes.andre.popularmovies.net.FetchTrailerTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class DetailActivity extends AppCompatActivity implements ICompletableTask {
+public class DetailActivity extends AppCompatActivity implements OnReviewFetchListener, OnTrailerFetchListener {
 
 
     @Override
@@ -45,8 +48,11 @@ public class DetailActivity extends AppCompatActivity implements ICompletableTas
 
         setTitle("Synopsis");
 
-        FetchTrailerTask task = new FetchTrailerTask(this);
-        task.execute(movie.getId());
+        FetchTrailerTask taskTrailer = new FetchTrailerTask(this);
+        taskTrailer.execute(movie.getId());
+
+        FetchReviewTask taskReview = new FetchReviewTask(this);
+        taskReview .execute(movie.getId());
     }
 
     private Movie getMovie() {
@@ -55,18 +61,17 @@ public class DetailActivity extends AppCompatActivity implements ICompletableTas
     }
 
     @Override
-    public void onTaskCompleted(Object result) {
+    public void onTrailerTaskCompleted(ArrayList<String> listUrls) {
 
-        if (result != null) {
-            ArrayList<String> listUrls = (ArrayList<String>) result;
+        if (listUrls != null) {
+
+            LinearLayout mainLinearLayout = (LinearLayout) findViewById(R.id.linear_details);
 
             for (final String url : listUrls) {
 
                 ImageButton newButton = (ImageButton) getLayoutInflater().inflate(R.layout.button_youtube, null);
 
-                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear_details);
-
-                linearLayout.addView(newButton);
+                mainLinearLayout.addView(newButton);
 
                 newButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -80,5 +85,33 @@ public class DetailActivity extends AppCompatActivity implements ICompletableTas
         {
             Toast.makeText(getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_LONG);
         }
+    }
+
+    @Override
+    public void onReviewTaskCompleted(ArrayList<Review> reviews) {
+
+        if (reviews != null) {
+
+            LinearLayout mainLinearLayout = (LinearLayout) findViewById(R.id.linear_details);
+
+            for (final Review review : reviews) {
+
+                LinearLayout newLayout = (LinearLayout)
+                        getLayoutInflater().inflate(R.layout.linear_review_item, null);
+
+                TextView author = (TextView) newLayout.findViewById(R.id.textview_review_author);
+                author.setText(review.getAuthor());
+
+                TextView content = (TextView) newLayout.findViewById(R.id.textview_review_content);
+                content.setText(review.getContent());
+
+                mainLinearLayout.addView(newLayout);
+            }
+
+        } else
+        {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_LONG);
+        }
+
     }
 }
