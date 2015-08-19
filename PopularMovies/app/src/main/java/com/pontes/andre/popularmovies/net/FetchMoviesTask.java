@@ -1,6 +1,10 @@
-package com.pontes.andre.popularmovies;
+package com.pontes.andre.popularmovies.net;
 
 import android.os.AsyncTask;
+
+import com.pontes.andre.popularmovies.ICompletableTask;
+import com.pontes.andre.popularmovies.model.Movie;
+import com.pontes.andre.popularmovies.model.OrderEnum;
 
 import java.util.ArrayList;
 
@@ -25,7 +29,7 @@ public class FetchMoviesTask extends AsyncTask<OrderEnum, Void, ArrayList<Movie>
             return null;
 
         try {
-            return new MoviesJsonParser().Parse(moviesJsonStr);
+            return new MovieJsonParser().Parse(moviesJsonStr);
         } catch (Exception e) {
             e.printStackTrace();
         }

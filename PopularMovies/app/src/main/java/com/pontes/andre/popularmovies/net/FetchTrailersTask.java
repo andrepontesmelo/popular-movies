@@ -1,6 +1,8 @@
-package com.pontes.andre.popularmovies;
+package com.pontes.andre.popularmovies.net;
 
 import android.os.AsyncTask;
+
+import com.pontes.andre.popularmovies.ICompletableTask;
 
 import java.util.ArrayList;
 

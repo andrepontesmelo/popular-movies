@@ -1,4 +1,4 @@
-package com.pontes.andre.popularmovies;
+package com.pontes.andre.popularmovies.model;
 
 public enum OrderEnum
 {

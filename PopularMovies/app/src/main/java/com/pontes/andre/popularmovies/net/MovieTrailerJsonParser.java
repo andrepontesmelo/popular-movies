@@ -1,4 +1,4 @@
-package com.pontes.andre.popularmovies;
+package com.pontes.andre.popularmovies.net;
 
 import org.json.JSONArray;
 import org.json.JSONException;

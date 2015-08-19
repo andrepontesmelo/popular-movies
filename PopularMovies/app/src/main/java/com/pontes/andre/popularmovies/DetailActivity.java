@@ -12,6 +12,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pontes.andre.popularmovies.model.Movie;
+import com.pontes.andre.popularmovies.net.FetchTrailersTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

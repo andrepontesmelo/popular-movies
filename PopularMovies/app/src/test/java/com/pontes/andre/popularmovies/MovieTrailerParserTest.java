@@ -1,5 +1,7 @@
 package com.pontes.andre.popularmovies;
 
+import com.pontes.andre.popularmovies.net.MovieTrailerJsonParser;
+
 import junit.framework.Assert;
 
 import org.junit.Test;

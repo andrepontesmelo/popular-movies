@@ -1,4 +1,6 @@
-package com.pontes.andre.popularmovies;
+package com.pontes.andre.popularmovies.net;
+
+import com.pontes.andre.popularmovies.model.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,7 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class MoviesJsonParser {
+public class MovieJsonParser {
 
     public ArrayList<Movie> Parse(String json)
             throws JSONException, ParseException {

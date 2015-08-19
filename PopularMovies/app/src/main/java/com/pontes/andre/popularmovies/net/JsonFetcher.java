@@ -1,4 +1,4 @@
-package com.pontes.andre.popularmovies;
+package com.pontes.andre.popularmovies.net;
 
 import android.support.annotation.Nullable;
 import android.util.Log;

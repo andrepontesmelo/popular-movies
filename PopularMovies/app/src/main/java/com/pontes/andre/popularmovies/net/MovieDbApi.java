@@ -1,4 +1,6 @@
-package com.pontes.andre.popularmovies;
+package com.pontes.andre.popularmovies.net;
+
+import com.pontes.andre.popularmovies.model.OrderEnum;
 
 public class MovieDbApi {
 

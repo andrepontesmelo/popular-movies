@@ -13,6 +13,10 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.pontes.andre.popularmovies.model.Movie;
+import com.pontes.andre.popularmovies.model.OrderEnum;
+import com.pontes.andre.popularmovies.net.FetchMoviesTask;
+
 import java.util.ArrayList;
 
 public class MainActivityFragment extends Fragment implements ICompletableTask {
