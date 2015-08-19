@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public class MovieTrailerJsonParser {
+public class TrailerJsonParser {
 
     private final String YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v=";
 

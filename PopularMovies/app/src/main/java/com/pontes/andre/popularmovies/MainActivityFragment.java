@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.pontes.andre.popularmovies.model.Movie;
 import com.pontes.andre.popularmovies.model.OrderEnum;
-import com.pontes.andre.popularmovies.net.FetchMoviesTask;
+import com.pontes.andre.popularmovies.net.FetchMovieTask;
 
 import java.util.ArrayList;
 
@@ -100,7 +100,7 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
 
     private void updateMovies(OrderEnum order) {
 
-        FetchMoviesTask task = new FetchMoviesTask(this);
+        FetchMovieTask task = new FetchMovieTask(this);
         task.execute(order);
 
         lastOrder = order;

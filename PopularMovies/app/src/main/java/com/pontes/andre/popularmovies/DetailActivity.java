@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pontes.andre.popularmovies.model.Movie;
-import com.pontes.andre.popularmovies.net.FetchTrailersTask;
+import com.pontes.andre.popularmovies.net.FetchTrailerTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class DetailActivity extends AppCompatActivity implements ICompletableTas
 
         setTitle("Synopsis");
 
-        FetchTrailersTask task = new FetchTrailersTask(this);
+        FetchTrailerTask task = new FetchTrailerTask(this);
         task.execute(movie.getId());
     }
 

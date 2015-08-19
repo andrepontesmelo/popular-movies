@@ -3,25 +3,23 @@ package com.pontes.andre.popularmovies.net;
 import android.os.AsyncTask;
 
 import com.pontes.andre.popularmovies.ICompletableTask;
-import com.pontes.andre.popularmovies.model.Movie;
-import com.pontes.andre.popularmovies.model.OrderEnum;
 
 import java.util.ArrayList;
 
-public class FetchMoviesTask extends AsyncTask<OrderEnum, Void, ArrayList<Movie>> {
-    private final String LOG_TAG = FetchMoviesTask.class.getSimpleName();
+public class FetchTrailerTask extends AsyncTask<Long, Void, ArrayList<String>> {
+    private final String LOG_TAG = FetchTrailerTask.class.getSimpleName();
 
     private ICompletableTask listener;
 
-    public FetchMoviesTask(ICompletableTask listener)
+    public FetchTrailerTask(ICompletableTask listener)
     {
         this.listener = listener;
     }
 
     @Override
-    public ArrayList<Movie> doInBackground(OrderEnum... params) {
+    public ArrayList<String> doInBackground(Long... params) {
 
-        String url = MovieDbApi.getInstance().getUrl(params[0]);
+        String url = MovieDbApi.getInstance().getTrailerUrl(params[0]);
 
         String moviesJsonStr = JsonFetcher.getInstance().getJsonStr(url);
 
@@ -29,7 +27,7 @@ public class FetchMoviesTask extends AsyncTask<OrderEnum, Void, ArrayList<Movie>
             return null;
 
         try {
-            return new MovieJsonParser().Parse(moviesJsonStr);
+            return new TrailerJsonParser().Parse(moviesJsonStr);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -38,7 +36,7 @@ public class FetchMoviesTask extends AsyncTask<OrderEnum, Void, ArrayList<Movie>
     }
 
     @Override
-    protected void onPostExecute(final ArrayList<Movie> movies) {
+    protected void onPostExecute(final ArrayList<String> movies) {
 
         listener.onTaskCompleted(movies);
 
