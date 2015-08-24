@@ -1,0 +1,10 @@
+{
+	"fields": [
+           	{
+			"name": "movie_id",
+			"type": "Long",
+			"nullable": false,
+			"index": true
+		}
+	]
+}

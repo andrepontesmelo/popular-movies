@@ -4,11 +4,21 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import com.pontes.andre.popularmovies.provider.PopularMovieProvider;
+import com.pontes.andre.popularmovies.provider.favorites.FavoritesColumns;
+import com.pontes.andre.popularmovies.provider.movie.MovieColumns;
+import com.pontes.andre.popularmovies.provider.review.ReviewColumns;
+import com.pontes.andre.popularmovies.provider.trailer.TrailerColumns;
 
+/**
+ * Columns for the {@code movie} table.
+ */
 public class MovieColumns implements BaseColumns {
     public static final String TABLE_NAME = "movie";
     public static final Uri CONTENT_URI = Uri.parse(PopularMovieProvider.CONTENT_URI_BASE + "/" + TABLE_NAME);
 
+    /**
+     * Primary key.
+     */
     public static final String _ID = BaseColumns._ID;
 
     public static final String TITLE = "title";

@@ -1,4 +1,4 @@
-package com.pontes.andre.popularmovies.provider.trailer;
+package com.pontes.andre.popularmovies.provider.favorites;
 
 import java.util.Date;
 
@@ -9,10 +9,10 @@ import android.support.annotation.Nullable;
 import com.pontes.andre.popularmovies.provider.base.AbstractCursor;
 
 /**
- * Cursor wrapper for the {@code trailer} table.
+ * Cursor wrapper for the {@code favorites} table.
  */
-public class TrailerCursor extends AbstractCursor implements TrailerModel {
-    public TrailerCursor(Cursor cursor) {
+public class FavoritesCursor extends AbstractCursor implements FavoritesModel {
+    public FavoritesCursor(Cursor cursor) {
         super(cursor);
     }
 
@@ -20,7 +20,7 @@ public class TrailerCursor extends AbstractCursor implements TrailerModel {
      * Primary key.
      */
     public long getId() {
-        Long res = getLongOrNull(TrailerColumns._ID);
+        Long res = getLongOrNull(FavoritesColumns._ID);
         if (res == null)
             throw new NullPointerException("The value of '_id' in the database was null, which is not allowed according to the model definition");
         return res;
@@ -30,21 +30,9 @@ public class TrailerCursor extends AbstractCursor implements TrailerModel {
      * Get the {@code movie_id} value.
      */
     public long getMovieId() {
-        Long res = getLongOrNull(TrailerColumns.MOVIE_ID);
+        Long res = getLongOrNull(FavoritesColumns.MOVIE_ID);
         if (res == null)
             throw new NullPointerException("The value of 'movie_id' in the database was null, which is not allowed according to the model definition");
-        return res;
-    }
-
-    /**
-     * Get the {@code youtube_key} value.
-     * Cannot be {@code null}.
-     */
-    @NonNull
-    public String getYoutubeKey() {
-        String res = getStringOrNull(TrailerColumns.YOUTUBE_KEY);
-        if (res == null)
-            throw new NullPointerException("The value of 'youtube_key' in the database was null, which is not allowed according to the model definition");
         return res;
     }
 }

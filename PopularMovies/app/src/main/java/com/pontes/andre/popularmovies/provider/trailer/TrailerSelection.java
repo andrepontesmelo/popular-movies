@@ -1,34 +1,59 @@
 package com.pontes.andre.popularmovies.provider.trailer;
 
-import android.content.ContentResolver;
+import java.util.Date;
+
 import android.content.Context;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 
 import com.pontes.andre.popularmovies.provider.base.AbstractSelection;
 
+/**
+ * Selection for the {@code trailer} table.
+ */
 public class TrailerSelection extends AbstractSelection<TrailerSelection> {
     @Override
     protected Uri baseUri() {
         return TrailerColumns.CONTENT_URI;
     }
 
+    /**
+     * Query the given content resolver using this selection.
+     *
+     * @param contentResolver The content resolver to query.
+     * @param projection A list of which columns to return. Passing null will return all columns, which is inefficient.
+     * @return A {@code TrailerCursor} object, which is positioned before the first entry, or null.
+     */
     public TrailerCursor query(ContentResolver contentResolver, String[] projection) {
         Cursor cursor = contentResolver.query(uri(), projection, sel(), args(), order());
         if (cursor == null) return null;
         return new TrailerCursor(cursor);
     }
 
+    /**
+     * Equivalent of calling {@code query(contentResolver, null)}.
+     */
     public TrailerCursor query(ContentResolver contentResolver) {
         return query(contentResolver, null);
     }
 
+    /**
+     * Query the given content resolver using this selection.
+     *
+     * @param context The context to use for the query.
+     * @param projection A list of which columns to return. Passing null will return all columns, which is inefficient.
+     * @return A {@code TrailerCursor} object, which is positioned before the first entry, or null.
+     */
     public TrailerCursor query(Context context, String[] projection) {
         Cursor cursor = context.getContentResolver().query(uri(), projection, sel(), args(), order());
         if (cursor == null) return null;
         return new TrailerCursor(cursor);
     }
 
+    /**
+     * Equivalent of calling {@code query(context, null)}.
+     */
     public TrailerCursor query(Context context) {
         return query(context, null);
     }

@@ -7,7 +7,7 @@
 	"sqliteOpenHelperClassName": "PopularMovieSQLiteOpenHelper",
 	"sqliteOpenHelperCallbacksClassName": "PopularMovieSQLiteOpenHelperCallbacks",
 	"databaseFileName": "popularmovies.db",
-	"databaseVersion": 1,
+	"databaseVersion": 2,
 	"enableForeignKeys": true,
 	"useAnnotations": true
 }

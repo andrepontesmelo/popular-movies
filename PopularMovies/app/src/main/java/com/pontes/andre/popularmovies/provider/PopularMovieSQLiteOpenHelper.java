@@ -10,6 +10,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.pontes.andre.popularmovies.BuildConfig;
+import com.pontes.andre.popularmovies.provider.favorites.FavoritesColumns;
 import com.pontes.andre.popularmovies.provider.movie.MovieColumns;
 import com.pontes.andre.popularmovies.provider.review.ReviewColumns;
 import com.pontes.andre.popularmovies.provider.trailer.TrailerColumns;
@@ -18,12 +19,21 @@ public class PopularMovieSQLiteOpenHelper extends SQLiteOpenHelper {
     private static final String TAG = PopularMovieSQLiteOpenHelper.class.getSimpleName();
 
     public static final String DATABASE_FILE_NAME = "popularmovies.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static PopularMovieSQLiteOpenHelper sInstance;
     private final Context mContext;
     private final PopularMovieSQLiteOpenHelperCallbacks mOpenHelperCallbacks;
 
     // @formatter:off
+    public static final String SQL_CREATE_TABLE_FAVORITES = "CREATE TABLE IF NOT EXISTS "
+            + FavoritesColumns.TABLE_NAME + " ( "
+            + FavoritesColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + FavoritesColumns.MOVIE_ID + " INTEGER NOT NULL "
+            + " );";
+
+    public static final String SQL_CREATE_INDEX_FAVORITES_MOVIE_ID = "CREATE INDEX IDX_FAVORITES_MOVIE_ID "
+            + " ON " + FavoritesColumns.TABLE_NAME + " ( " + FavoritesColumns.MOVIE_ID + " );";
+
     public static final String SQL_CREATE_TABLE_MOVIE = "CREATE TABLE IF NOT EXISTS "
             + MovieColumns.TABLE_NAME + " ( "
             + MovieColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -108,6 +118,8 @@ public class PopularMovieSQLiteOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         if (BuildConfig.DEBUG) Log.d(TAG, "onCreate");
         mOpenHelperCallbacks.onPreCreate(mContext, db);
+        db.execSQL(SQL_CREATE_TABLE_FAVORITES);
+        db.execSQL(SQL_CREATE_INDEX_FAVORITES_MOVIE_ID);
         db.execSQL(SQL_CREATE_TABLE_MOVIE);
         db.execSQL(SQL_CREATE_INDEX_MOVIE_MOVIE_ID);
         db.execSQL(SQL_CREATE_TABLE_REVIEW);

@@ -1,4 +1,4 @@
-package com.pontes.andre.popularmovies.provider.review;
+package com.pontes.andre.popularmovies.provider.favorites;
 
 import java.util.Date;
 
@@ -11,12 +11,12 @@ import android.support.annotation.Nullable;
 import com.pontes.andre.popularmovies.provider.base.AbstractContentValues;
 
 /**
- * Content values wrapper for the {@code review} table.
+ * Content values wrapper for the {@code favorites} table.
  */
-public class ReviewContentValues extends AbstractContentValues {
+public class FavoritesContentValues extends AbstractContentValues {
     @Override
     public Uri uri() {
-        return ReviewColumns.CONTENT_URI;
+        return FavoritesColumns.CONTENT_URI;
     }
 
     /**
@@ -25,7 +25,7 @@ public class ReviewContentValues extends AbstractContentValues {
      * @param contentResolver The content resolver to use.
      * @param where The selection to use (can be {@code null}).
      */
-    public int update(ContentResolver contentResolver, @Nullable ReviewSelection where) {
+    public int update(ContentResolver contentResolver, @Nullable FavoritesSelection where) {
         return contentResolver.update(uri(), values(), where == null ? null : where.sel(), where == null ? null : where.args());
     }
 
@@ -35,26 +35,12 @@ public class ReviewContentValues extends AbstractContentValues {
      * @param contentResolver The content resolver to use.
      * @param where The selection to use (can be {@code null}).
      */
-    public int update(Context context, @Nullable ReviewSelection where) {
+    public int update(Context context, @Nullable FavoritesSelection where) {
         return context.getContentResolver().update(uri(), values(), where == null ? null : where.sel(), where == null ? null : where.args());
     }
 
-    public ReviewContentValues putMovieId(long value) {
-        mContentValues.put(ReviewColumns.MOVIE_ID, value);
-        return this;
-    }
-
-
-    public ReviewContentValues putAuthor(@NonNull String value) {
-        if (value == null) throw new IllegalArgumentException("author must not be null");
-        mContentValues.put(ReviewColumns.AUTHOR, value);
-        return this;
-    }
-
-
-    public ReviewContentValues putContent(@NonNull String value) {
-        if (value == null) throw new IllegalArgumentException("content must not be null");
-        mContentValues.put(ReviewColumns.CONTENT, value);
+    public FavoritesContentValues putMovieId(long value) {
+        mContentValues.put(FavoritesColumns.MOVIE_ID, value);
         return this;
     }
 

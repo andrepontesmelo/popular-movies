@@ -1,33 +1,59 @@
 package com.pontes.andre.popularmovies.provider.review;
 
-import android.content.ContentResolver;
+import java.util.Date;
+
 import android.content.Context;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 
 import com.pontes.andre.popularmovies.provider.base.AbstractSelection;
 
+/**
+ * Selection for the {@code review} table.
+ */
 public class ReviewSelection extends AbstractSelection<ReviewSelection> {
     @Override
     protected Uri baseUri() {
         return ReviewColumns.CONTENT_URI;
     }
 
+    /**
+     * Query the given content resolver using this selection.
+     *
+     * @param contentResolver The content resolver to query.
+     * @param projection A list of which columns to return. Passing null will return all columns, which is inefficient.
+     * @return A {@code ReviewCursor} object, which is positioned before the first entry, or null.
+     */
     public ReviewCursor query(ContentResolver contentResolver, String[] projection) {
         Cursor cursor = contentResolver.query(uri(), projection, sel(), args(), order());
         if (cursor == null) return null;
         return new ReviewCursor(cursor);
     }
 
+    /**
+     * Equivalent of calling {@code query(contentResolver, null)}.
+     */
     public ReviewCursor query(ContentResolver contentResolver) {
         return query(contentResolver, null);
     }
 
+    /**
+     * Query the given content resolver using this selection.
+     *
+     * @param context The context to use for the query.
+     * @param projection A list of which columns to return. Passing null will return all columns, which is inefficient.
+     * @return A {@code ReviewCursor} object, which is positioned before the first entry, or null.
+     */
     public ReviewCursor query(Context context, String[] projection) {
         Cursor cursor = context.getContentResolver().query(uri(), projection, sel(), args(), order());
         if (cursor == null) return null;
         return new ReviewCursor(cursor);
     }
+
+    /**
+     * Equivalent of calling {@code query(context, null)}.
+     */
     public ReviewCursor query(Context context) {
         return query(context, null);
     }

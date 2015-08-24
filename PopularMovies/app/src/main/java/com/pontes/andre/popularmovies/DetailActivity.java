@@ -1,6 +1,7 @@
 package com.pontes.andre.popularmovies;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pontes.andre.popularmovies.model.Favorites;
 import com.pontes.andre.popularmovies.model.Movie;
 import com.pontes.andre.popularmovies.model.Review;
 import com.pontes.andre.popularmovies.net.FetchReviewTask;
@@ -28,7 +30,30 @@ public class DetailActivity extends AppCompatActivity implements OnReviewFetchLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        Movie movie = getMovie();
+        final Movie movie = getMovie();
+
+        final ImageButton favorite = (ImageButton) findViewById(R.id.imageButton_favorite);
+        updateFavoriteStar(favorite,
+                Favorites.getInstance().isFavorite(movie.getId(), favorite.getContext()));
+
+        favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Favorites db = Favorites.getInstance();
+
+                boolean isFavorite = db.isFavorite(movie.getId(), favorite.getContext());
+
+                if (isFavorite)
+                    db.remove(movie.getId(), favorite.getContext());
+                else
+                    db.insert(movie.getId(), favorite.getContext());
+
+                isFavorite = !isFavorite;
+
+                updateFavoriteStar(favorite, isFavorite);
+            }
+        });
 
         TextView txtMovieName = (TextView) findViewById(R.id.textview_movie_name);
         txtMovieName.setText(movie.getTitle());
@@ -52,6 +77,11 @@ public class DetailActivity extends AppCompatActivity implements OnReviewFetchLi
 
         FetchReviewTask taskReview = new FetchReviewTask(this);
         taskReview .execute(movie.getId());
+    }
+
+    private void updateFavoriteStar(ImageButton btn, boolean isFavorite) {
+
+        btn.setColorFilter(isFavorite ? Color.RED : Color.WHITE);
     }
 
     private Movie getMovie() {

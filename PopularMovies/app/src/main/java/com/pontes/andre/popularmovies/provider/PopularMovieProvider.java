@@ -1,19 +1,21 @@
 package com.pontes.andre.popularmovies.provider;
 
+import java.util.Arrays;
+
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.pontes.andre.popularmovies.BuildConfig;
 import com.pontes.andre.popularmovies.provider.base.BaseContentProvider;
+import com.pontes.andre.popularmovies.provider.favorites.FavoritesColumns;
 import com.pontes.andre.popularmovies.provider.movie.MovieColumns;
 import com.pontes.andre.popularmovies.provider.review.ReviewColumns;
 import com.pontes.andre.popularmovies.provider.trailer.TrailerColumns;
-
-import java.util.Arrays;
 
 public class PopularMovieProvider extends BaseContentProvider {
     private static final String TAG = PopularMovieProvider.class.getSimpleName();
@@ -26,20 +28,25 @@ public class PopularMovieProvider extends BaseContentProvider {
     public static final String AUTHORITY = "com.pontes.andre.popularmovies.provider";
     public static final String CONTENT_URI_BASE = "content://" + AUTHORITY;
 
-    private static final int URI_TYPE_MOVIE = 0;
-    private static final int URI_TYPE_MOVIE_ID = 1;
+    private static final int URI_TYPE_FAVORITES = 0;
+    private static final int URI_TYPE_FAVORITES_ID = 1;
 
-    private static final int URI_TYPE_REVIEW = 2;
-    private static final int URI_TYPE_REVIEW_ID = 3;
+    private static final int URI_TYPE_MOVIE = 2;
+    private static final int URI_TYPE_MOVIE_ID = 3;
 
-    private static final int URI_TYPE_TRAILER = 4;
-    private static final int URI_TYPE_TRAILER_ID = 5;
+    private static final int URI_TYPE_REVIEW = 4;
+    private static final int URI_TYPE_REVIEW_ID = 5;
+
+    private static final int URI_TYPE_TRAILER = 6;
+    private static final int URI_TYPE_TRAILER_ID = 7;
 
 
 
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
+        URI_MATCHER.addURI(AUTHORITY, FavoritesColumns.TABLE_NAME, URI_TYPE_FAVORITES);
+        URI_MATCHER.addURI(AUTHORITY, FavoritesColumns.TABLE_NAME + "/#", URI_TYPE_FAVORITES_ID);
         URI_MATCHER.addURI(AUTHORITY, MovieColumns.TABLE_NAME, URI_TYPE_MOVIE);
         URI_MATCHER.addURI(AUTHORITY, MovieColumns.TABLE_NAME + "/#", URI_TYPE_MOVIE_ID);
         URI_MATCHER.addURI(AUTHORITY, ReviewColumns.TABLE_NAME, URI_TYPE_REVIEW);
@@ -62,6 +69,11 @@ public class PopularMovieProvider extends BaseContentProvider {
     public String getType(Uri uri) {
         int match = URI_MATCHER.match(uri);
         switch (match) {
+            case URI_TYPE_FAVORITES:
+                return TYPE_CURSOR_DIR + FavoritesColumns.TABLE_NAME;
+            case URI_TYPE_FAVORITES_ID:
+                return TYPE_CURSOR_ITEM + FavoritesColumns.TABLE_NAME;
+
             case URI_TYPE_MOVIE:
                 return TYPE_CURSOR_DIR + MovieColumns.TABLE_NAME;
             case URI_TYPE_MOVIE_ID:
@@ -119,6 +131,14 @@ public class PopularMovieProvider extends BaseContentProvider {
         String id = null;
         int matchedId = URI_MATCHER.match(uri);
         switch (matchedId) {
+            case URI_TYPE_FAVORITES:
+            case URI_TYPE_FAVORITES_ID:
+                res.table = FavoritesColumns.TABLE_NAME;
+                res.idColumn = FavoritesColumns._ID;
+                res.tablesWithJoins = FavoritesColumns.TABLE_NAME;
+                res.orderBy = FavoritesColumns.DEFAULT_ORDER;
+                break;
+
             case URI_TYPE_MOVIE:
             case URI_TYPE_MOVIE_ID:
                 res.table = MovieColumns.TABLE_NAME;
@@ -148,6 +168,7 @@ public class PopularMovieProvider extends BaseContentProvider {
         }
 
         switch (matchedId) {
+            case URI_TYPE_FAVORITES_ID:
             case URI_TYPE_MOVIE_ID:
             case URI_TYPE_REVIEW_ID:
             case URI_TYPE_TRAILER_ID:

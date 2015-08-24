@@ -1,4 +1,4 @@
-package com.pontes.andre.popularmovies.provider.review;
+package com.pontes.andre.popularmovies.provider.favorites;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -10,10 +10,10 @@ import com.pontes.andre.popularmovies.provider.review.ReviewColumns;
 import com.pontes.andre.popularmovies.provider.trailer.TrailerColumns;
 
 /**
- * Columns for the {@code review} table.
+ * Columns for the {@code favorites} table.
  */
-public class ReviewColumns implements BaseColumns {
-    public static final String TABLE_NAME = "review";
+public class FavoritesColumns implements BaseColumns {
+    public static final String TABLE_NAME = "favorites";
     public static final Uri CONTENT_URI = Uri.parse(PopularMovieProvider.CONTENT_URI_BASE + "/" + TABLE_NAME);
 
     /**
@@ -23,19 +23,13 @@ public class ReviewColumns implements BaseColumns {
 
     public static final String MOVIE_ID = "movie_id";
 
-    public static final String AUTHOR = "author";
-
-    public static final String CONTENT = "content";
-
 
     public static final String DEFAULT_ORDER = TABLE_NAME + "." +_ID;
 
     // @formatter:off
     public static final String[] ALL_COLUMNS = new String[] {
             _ID,
-            MOVIE_ID,
-            AUTHOR,
-            CONTENT
+            MOVIE_ID
     };
     // @formatter:on
 
@@ -43,8 +37,6 @@ public class ReviewColumns implements BaseColumns {
         if (projection == null) return true;
         for (String c : projection) {
             if (c.equals(MOVIE_ID) || c.contains("." + MOVIE_ID)) return true;
-            if (c.equals(AUTHOR) || c.contains("." + AUTHOR)) return true;
-            if (c.equals(CONTENT) || c.contains("." + CONTENT)) return true;
         }
         return false;
     }

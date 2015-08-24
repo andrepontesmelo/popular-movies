@@ -1,13 +1,13 @@
 package com.pontes.andre.popularmovies.provider.base;
 
-import android.content.ContentResolver;
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import android.content.Context;
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
 
 public abstract class AbstractSelection<T extends AbstractSelection<?>> {
     private static final String EQ = "=?";
@@ -260,20 +260,32 @@ public abstract class AbstractSelection<T extends AbstractSelection<?>> {
     }
 
 
+    /**
+     * Returns the selection produced by this object.
+     */
     public String sel() {
         return mSelection.toString();
     }
 
+    /**
+     * Returns the selection arguments produced by this object.
+     */
     public String[] args() {
         int size = mSelectionArgs.size();
         if (size == 0) return null;
         return mSelectionArgs.toArray(new String[size]);
     }
 
+    /**
+     * Returns the order string produced by this object.
+     */
     public String order() {
         return mOrderBy.length() > 0 ? mOrderBy.toString() : null;
     }
 
+    /**
+     * Returns the {@code uri} argument to pass to the {@code ContentResolver} methods.
+     */
     public Uri uri() {
         Uri uri = baseUri();
         if (mNotify != null) uri = BaseContentProvider.notify(uri, mNotify);
@@ -285,10 +297,22 @@ public abstract class AbstractSelection<T extends AbstractSelection<?>> {
 
     protected abstract Uri baseUri();
 
+    /**
+     * Deletes row(s) specified by this selection.
+     *
+     * @param contentResolver The content resolver to use.
+     * @return The number of rows deleted.
+     */
     public int delete(ContentResolver contentResolver) {
         return contentResolver.delete(uri(), sel(), args());
     }
 
+    /**
+     * Deletes row(s) specified by this selection.
+     *
+     * @param context The context to use.
+     * @return The number of rows deleted.
+     */
     public int delete(Context context) {
         return context.getContentResolver().delete(uri(), sel(), args());
     }

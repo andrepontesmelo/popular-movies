@@ -1,10 +1,19 @@
 package com.pontes.andre.popularmovies.model;
 
+import android.content.ContentUris;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
+import com.pontes.andre.popularmovies.provider.movie.MovieColumns;
 import com.pontes.andre.popularmovies.provider.movie.MovieContentValues;
+import com.pontes.andre.popularmovies.provider.movie.MovieCursor;
+import com.pontes.andre.popularmovies.provider.movie.MovieSelection;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Movie implements Parcelable {
@@ -16,7 +25,6 @@ public class Movie implements Parcelable {
     private Date releaseDate;
     private long id;
     private boolean favorite;
-
 
     public String getSynopsis() { return synopsis; }
     public void setSynopsis(String synopsis) { this.synopsis = synopsis; }
@@ -102,5 +110,54 @@ public class Movie implements Parcelable {
         content.putFavorite(favorite);
 
         return content;
+    }
+
+    public long insert(Context context) {
+        MovieContentValues values = getDbContents();
+
+        Uri uri = values.insert(context.getContentResolver());
+        return ContentUris.parseId(uri);
+    }
+
+    public static ArrayList<Movie> getAll(Context context) {
+
+        ArrayList<Movie> result = new ArrayList<Movie>();
+
+        MovieSelection where = new MovieSelection();
+
+        Cursor c = context.getContentResolver().query(MovieColumns.CONTENT_URI, null,
+                where.sel(), where.args(), null);
+
+        c.moveToFirst();
+
+        while (c.getCount() > 0) {
+            MovieCursor mc = new MovieCursor(c);
+
+            Movie movie = getMovie(mc);
+
+            result.add(movie);
+
+            if (c.isLast())
+                break;
+            else
+                c.moveToNext();
+        }
+
+        return result;
+    }
+
+    @NonNull
+    private static Movie getMovie(MovieCursor mc) {
+
+        Movie movie = new Movie();
+
+        movie.setFavorite(mc.getFavorite());
+        movie.setVoteAvgInTen(mc.getVoteAvgInTen());
+        movie.setReleaseDate(mc.getReleaseDate());
+        movie.setSynopsis(mc.getSynopsis());
+        movie.setId(mc.getId());
+        movie.setPosterUrl(mc.getPosterUrl());
+        movie.setTitle(mc.getTitle());
+        return movie;
     }
 }

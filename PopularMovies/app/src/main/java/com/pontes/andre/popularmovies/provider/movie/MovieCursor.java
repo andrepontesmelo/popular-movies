@@ -1,18 +1,24 @@
 package com.pontes.andre.popularmovies.provider.movie;
 
+import java.util.Date;
+
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.pontes.andre.popularmovies.provider.base.AbstractCursor;
 
-import java.util.Date;
-
+/**
+ * Cursor wrapper for the {@code movie} table.
+ */
 public class MovieCursor extends AbstractCursor implements MovieModel {
     public MovieCursor(Cursor cursor) {
         super(cursor);
     }
 
+    /**
+     * Primary key.
+     */
     public long getId() {
         Long res = getLongOrNull(MovieColumns._ID);
         if (res == null)
@@ -20,6 +26,10 @@ public class MovieCursor extends AbstractCursor implements MovieModel {
         return res;
     }
 
+    /**
+     * Get the {@code title} value.
+     * Cannot be {@code null}.
+     */
     @NonNull
     public String getTitle() {
         String res = getStringOrNull(MovieColumns.TITLE);
@@ -28,6 +38,10 @@ public class MovieCursor extends AbstractCursor implements MovieModel {
         return res;
     }
 
+    /**
+     * Get the {@code poster_url} value.
+     * Cannot be {@code null}.
+     */
     @NonNull
     public String getPosterUrl() {
         String res = getStringOrNull(MovieColumns.POSTER_URL);
@@ -36,6 +50,10 @@ public class MovieCursor extends AbstractCursor implements MovieModel {
         return res;
     }
 
+    /**
+     * Get the {@code synopsis} value.
+     * Cannot be {@code null}.
+     */
     @NonNull
     public String getSynopsis() {
         String res = getStringOrNull(MovieColumns.SYNOPSIS);
@@ -44,12 +62,20 @@ public class MovieCursor extends AbstractCursor implements MovieModel {
         return res;
     }
 
+    /**
+     * Get the {@code vote_avg_in_ten} value.
+     * Can be {@code null}.
+     */
     @Nullable
     public Float getVoteAvgInTen() {
         Float res = getFloatOrNull(MovieColumns.VOTE_AVG_IN_TEN);
         return res;
     }
 
+    /**
+     * Get the {@code release_date} value.
+     * Cannot be {@code null}.
+     */
     @NonNull
     public Date getReleaseDate() {
         Date res = getDateOrNull(MovieColumns.RELEASE_DATE);
@@ -58,6 +84,9 @@ public class MovieCursor extends AbstractCursor implements MovieModel {
         return res;
     }
 
+    /**
+     * Get the {@code movie_id} value.
+     */
     public long getMovieId() {
         Long res = getLongOrNull(MovieColumns.MOVIE_ID);
         if (res == null)
@@ -65,6 +94,9 @@ public class MovieCursor extends AbstractCursor implements MovieModel {
         return res;
     }
 
+    /**
+     * Get the {@code favorite} value.
+     */
     public boolean getFavorite() {
         Boolean res = getBooleanOrNull(MovieColumns.FAVORITE);
         if (res == null)
