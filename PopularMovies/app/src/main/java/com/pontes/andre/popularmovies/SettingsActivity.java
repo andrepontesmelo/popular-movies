@@ -6,8 +6,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
-import com.pontes.andre.popularmovies.R;
-
 public class SettingsActivity extends PreferenceActivity
         implements Preference.OnPreferenceChangeListener {
 
@@ -17,7 +15,18 @@ public class SettingsActivity extends PreferenceActivity
 
         addPreferencesFromResource(R.xml.pref_general);
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sort_key)));
+        bindPreferenceBoolean(findPreference(getString(R.string.pref_use_favorite_key)));
     }
+
+    private void bindPreferenceBoolean(Preference preference) {
+        preference.setOnPreferenceChangeListener(this);
+
+        onPreferenceChange(preference,
+                PreferenceManager
+                        .getDefaultSharedPreferences(preference.getContext())
+                        .getBoolean(preference.getKey(), false));
+    }
+
 
     private void bindPreferenceSummaryToValue(Preference preference) {
         preference.setOnPreferenceChangeListener(this);

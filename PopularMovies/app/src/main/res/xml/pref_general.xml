@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
-        android:key="pref_sort"
+        android:key="@string/pref_sort_key"
         android:title="Sort by"
         android:entries="@array/sort_options"
         android:entryValues="@array/sort_options"
         android:defaultValue="@string/pref_sort_default"/>
+    <SwitchPreference
+        android:key="@string/pref_use_favorite_key"
+        android:title="@string/pref_fav_first_title"
+        android:defaultValue="false"/>
 </PreferenceScreen>

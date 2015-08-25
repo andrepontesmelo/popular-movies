@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +15,21 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.pontes.andre.popularmovies.model.Favorites;
 import com.pontes.andre.popularmovies.model.Movie;
 import com.pontes.andre.popularmovies.model.OrderEnum;
 import com.pontes.andre.popularmovies.net.FetchMovieTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivityFragment extends Fragment implements ICompletableTask {
 
+    private String LOG_TAG = MainActivityFragment.class.getSimpleName();
+
     private GridView gridview;
+
+    private Context context;
 
     private ArrayList<Movie> movies = null;
 
@@ -40,8 +47,11 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
     public void onStart() {
         super.onStart();
 
+        Log.v(LOG_TAG, "On Start()");
         if (userHasChangedOrder())
             updateMovies(getOrder());
+        else
+            reorderMoviesAndUpdateAdapter(movies);
     }
 
     @Override
@@ -56,7 +66,7 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Context context = inflater.getContext();
+        context = inflater.getContext();
 
         View view =  inflater.inflate(R.layout.fragment_main_activity, container, false);
 
@@ -73,7 +83,11 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
         });
 
         if (savedInstanceState != null) {
+            Log.v(LOG_TAG, "Reading state...");
             movies = savedInstanceState.getParcelableArrayList("movies");
+
+            reorderMoviesAndUpdateAdapter(movies);
+
             lastOrder = (OrderEnum) savedInstanceState.getSerializable("lastOrder");
             updateAdapter((ArrayList<Movie>) movies);
         } else
@@ -98,6 +112,15 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
             default:
                 throw new UnsupportedOperationException();
         }
+    }
+
+    private boolean getPrefFavoriteFirst()
+    {
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        Log.v(LOG_TAG, "Show favorites first preference ? " + preferences.getBoolean(getString(R.string.pref_use_favorite_key), false));
+        return preferences.getBoolean(getString(R.string.pref_use_favorite_key), false);
     }
 
     private void updateMovies(OrderEnum order) {
@@ -141,10 +164,40 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
     {
         ArrayList<Movie> movies = (ArrayList<Movie>) movieArray;
 
+        reorderMoviesAndUpdateAdapter(movies);
+    }
+
+    private void reorderMoviesAndUpdateAdapter(ArrayList<Movie> movies)
+    {
+        if (movies == null)
+            return;
+
+        if (getPrefFavoriteFirst())
+            reorderHavingFavoritesFirst(movies);
+
         updateAdapter(movies);
 
-//        for (Movie m : movies) {
-//            m.insert(context);
-//        }
+    }
+
+    private void reorderHavingFavoritesFirst(ArrayList<Movie> movies) {
+        Log.v(LOG_TAG, "Reordering...");
+
+        ArrayList<Long> favorites = Favorites.getInstance().getAll(context);
+
+        HashMap<Long, Movie> hashMovie = new HashMap<Long, Movie>();
+
+        for (Movie m : movies) {
+            hashMovie.put(m.getId(), m);
+        }
+
+        for (Long f : favorites) {
+            if (hashMovie.containsKey(f)) {
+                Movie movieToMove = hashMovie.get(f);
+
+                Log.v(LOG_TAG, "Reordering " + movieToMove.getTitle());
+                movies.remove(movieToMove);
+                movies.add(0, movieToMove);
+            }
+        }
     }
 }

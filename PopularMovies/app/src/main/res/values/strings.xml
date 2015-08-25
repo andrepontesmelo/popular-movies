@@ -9,6 +9,8 @@
     <string name="pref_sort_entries">pref_sort_entries</string>
     <string name="no_internet">No internet connection</string>
     <string name="synopsis">Synopsis</string>
+    <string name="pref_use_favorite_key">pref_use_favorite_key</string>
+    <string name="pref_fav_first_title">Favorites first</string>
     <string-array name="empty_array"></string-array>
 
     <string-array name="sort_options">
