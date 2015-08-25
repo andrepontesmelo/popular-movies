@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,9 +26,11 @@ import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity implements OnReviewFetchListener, OnTrailerFetchListener {
 
+    private ArrayList<String> listUrls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
@@ -76,7 +80,7 @@ public class DetailActivity extends AppCompatActivity implements OnReviewFetchLi
         taskTrailer.execute(movie.getId());
 
         FetchReviewTask taskReview = new FetchReviewTask(this);
-        taskReview .execute(movie.getId());
+        taskReview.execute(movie.getId());
     }
 
     private void updateFavoriteStar(ImageButton btn, boolean isFavorite) {
@@ -93,6 +97,7 @@ public class DetailActivity extends AppCompatActivity implements OnReviewFetchLi
     public void onTrailerTaskCompleted(ArrayList<String> listUrls) {
 
         if (listUrls != null) {
+            this.listUrls = listUrls;
 
             LinearLayout mainLinearLayout = (LinearLayout) findViewById(R.id.linear_details);
 
@@ -110,8 +115,7 @@ public class DetailActivity extends AppCompatActivity implements OnReviewFetchLi
                 });
             }
 
-        } else
-        {
+        } else {
             Toast.makeText(getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_LONG);
         }
     }
@@ -137,9 +141,46 @@ public class DetailActivity extends AppCompatActivity implements OnReviewFetchLi
                 mainLinearLayout.addView(newLayout);
             }
 
-        } else
-        {
+        } else {
             Toast.makeText(getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_LONG);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_details, menu);
+
+        return true;
+    }
+
+    private String getAllUrls(ArrayList<String> listUrls) {
+        StringBuilder str = new StringBuilder();
+
+        boolean first = true;
+
+        for (String s : listUrls) {
+
+            if (!first)
+                str.append(" ; ");
+
+            str.append(s);
+
+            first = false;
+        }
+
+        return str.toString();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_item_share && listUrls != null) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getAllUrls(listUrls));
+            sendIntent.setType("text/plain");
+            startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
