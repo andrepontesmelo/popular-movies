@@ -46,7 +46,7 @@ public class Favorites {
 
         c.moveToFirst();
 
-        while (true) {
+        while (c.getCount() > 0) {
             FavoritesCursor mc = new FavoritesCursor(c);
 
             result.add(mc.getMovieId());
