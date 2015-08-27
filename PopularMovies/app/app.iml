@@ -73,8 +73,8 @@
       <excludeFolder url="file:///mnt/terainterno/usuario/github/PopularMovies/PopularMovies/app/build/intermediates/dependency-cache" />
       <excludeFolder url="file:///mnt/terainterno/usuario/github/PopularMovies/PopularMovies/app/build/intermediates/dex" />
       <excludeFolder url="file:///mnt/terainterno/usuario/github/PopularMovies/PopularMovies/app/build/intermediates/dex-cache" />
-      <excludeFolder url="file:///mnt/terainterno/usuario/github/PopularMovies/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars" />
-      <excludeFolder url="file:///mnt/terainterno/usuario/github/PopularMovies/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars" />
+      <excludeFolder url="file:///mnt/terainterno/usuario/github/PopularMovies/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.0/jars" />
+      <excludeFolder url="file:///mnt/terainterno/usuario/github/PopularMovies/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars" />
       <excludeFolder url="file:///mnt/terainterno/usuario/github/PopularMovies/PopularMovies/app/build/intermediates/incremental" />
       <excludeFolder url="file:///mnt/terainterno/usuario/github/PopularMovies/PopularMovies/app/build/intermediates/jacoco" />
       <excludeFolder url="file:///mnt/terainterno/usuario/github/PopularMovies/PopularMovies/app/build/intermediates/javaResources" />
@@ -90,17 +90,17 @@
       <excludeFolder url="file:///mnt/terainterno/usuario/github/PopularMovies/PopularMovies/app/build/outputs" />
       <excludeFolder url="file:///mnt/terainterno/usuario/github/PopularMovies/PopularMovies/app/build/tmp" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" scope="TEST" name="objenesis-1.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="mockable-android-22" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-23.0.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-22.2.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="json-20140107" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-23.0.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="mockito-core-1.9.5" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-23.0.0" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="mockable-android-23" level="project" />
   </component>
 </module>

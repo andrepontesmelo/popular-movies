@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pontes.andre.popularmovies" >
 
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -10,14 +9,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <provider
-            android:name="com.pontes.andre.popularmovies.provider.PopularMovieProvider"
+            android:name=".provider.PopularMovieProvider"
             android:authorities="com.pontes.andre.popularmovies.provider"
             android:exported="false" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".MovieListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,8 +27,15 @@
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail" >
         </activity>
-
         <activity android:name=".SettingsActivity" />
+        <activity
+            android:name=".MovieDetailActivity"
+            android:label="@string/title_movie_detail"
+            android:parentActivityName=".MovieListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pontes.andre.popularmovies.MovieListActivity" />
+        </activity>
     </application>
 
 </manifest>
