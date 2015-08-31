@@ -12,7 +12,8 @@
     -->
 
     <fragment android:id="@+id/movie_list"
-        android:name="com.pontes.andre.popularmovies.MovieListFragment" android:layout_width="0dp"
+        android:name="com.pontes.andre.popularmovies.MainActivityFragment"
+        android:layout_width="0dp"
         android:layout_height="match_parent" android:layout_weight="1"
         tools:layout="@android:layout/list_content" />
 

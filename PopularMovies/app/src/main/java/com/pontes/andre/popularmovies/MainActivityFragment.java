@@ -35,12 +35,12 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
 
     private OrderEnum lastOrder;
 
+    public MainActivityFragment() {
+    }
+
     private boolean userHasChangedOrder()
     {
         return lastOrder != null && (lastOrder != getOrder());
-    }
-
-    public MainActivityFragment() {
     }
 
     @Override
@@ -89,7 +89,7 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
             reorderMoviesAndUpdateAdapter(movies);
 
             lastOrder = (OrderEnum) savedInstanceState.getSerializable("lastOrder");
-            updateAdapter((ArrayList<Movie>) movies);
+            updateAdapter(movies);
         } else
             updateMovies(getOrder());
 
@@ -184,7 +184,7 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
 
         ArrayList<Long> favorites = Favorites.getInstance().getAll(context);
 
-        HashMap<Long, Movie> hashMovie = new HashMap<Long, Movie>();
+        HashMap<Long, Movie> hashMovie = new HashMap<>();
 
         for (Movie m : movies) {
             hashMovie.put(m.getId(), m);

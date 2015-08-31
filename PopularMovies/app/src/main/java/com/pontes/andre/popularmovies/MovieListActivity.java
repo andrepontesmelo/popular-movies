@@ -35,6 +35,7 @@ public class MovieListActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
 
+
         if (findViewById(R.id.movie_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
@@ -44,9 +45,9 @@ public class MovieListActivity extends FragmentActivity
 
             // In two-pane mode, list items should be given the
             // 'activated' state when touched.
-            ((MovieListFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.movie_list))
-                    .setActivateOnItemClick(true);
+            //((MainActivityFragment) getSupportFragmentManager()
+            //.findFragmentById(R.id.movie_list))
+            //        .setActivateOnItemClick(true);
         }
 
         // TODO: If exposing deep links into your app, handle intents here.
