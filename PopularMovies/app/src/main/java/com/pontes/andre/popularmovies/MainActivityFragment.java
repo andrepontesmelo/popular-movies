@@ -26,14 +26,19 @@ import java.util.HashMap;
 public class MainActivityFragment extends Fragment implements ICompletableTask {
 
     private String LOG_TAG = MainActivityFragment.class.getSimpleName();
-
     private GridView gridview;
-
     private Context context;
-
     private ArrayList<Movie> movies = null;
-
     private OrderEnum lastOrder;
+
+
+    private IObserverFragmentSelect dummyObserver = new IObserverFragmentSelect() {
+        @Override
+        public void onItemSelected(Movie m) {
+        }
+    };
+
+    private IObserverFragmentSelect master = dummyObserver;
 
     public MainActivityFragment() {
     }
@@ -47,7 +52,6 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
     public void onStart() {
         super.onStart();
 
-        Log.v(LOG_TAG, "On Start()");
         if (userHasChangedOrder())
             updateMovies(getOrder());
         else
@@ -72,18 +76,7 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
 
         gridview = (GridView) view.findViewById(R.id.gridview);
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-
-                Intent details = new Intent(getActivity(), DetailActivity.class);
-
-                startActivity(details);
-            }
-        });
-
         if (savedInstanceState != null) {
-            Log.v(LOG_TAG, "Reading state...");
             movies = savedInstanceState.getParcelableArrayList("movies");
 
             reorderMoviesAndUpdateAdapter(movies);
@@ -146,11 +139,7 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
                 gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                        Intent details = new Intent(context, DetailActivity.class);
-
-                        details.putExtra("movie", movies.get(position));
-
-                        context.startActivity(details);
+                        master.onItemSelected(movies.get(position));
                     }
                 });
 
@@ -180,7 +169,6 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
     }
 
     private void reorderHavingFavoritesFirst(ArrayList<Movie> movies) {
-        Log.v(LOG_TAG, "Reordering...");
 
         ArrayList<Long> favorites = Favorites.getInstance().getAll(context);
 
@@ -194,10 +182,23 @@ public class MainActivityFragment extends Fragment implements ICompletableTask {
             if (hashMovie.containsKey(f)) {
                 Movie movieToMove = hashMovie.get(f);
 
-                Log.v(LOG_TAG, "Reordering " + movieToMove.getTitle());
                 movies.remove(movieToMove);
                 movies.add(0, movieToMove);
             }
         }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        master = (IObserverFragmentSelect) activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        master = dummyObserver;
     }
 }

@@ -1,61 +1,213 @@
 package com.pontes.andre.popularmovies;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pontes.andre.popularmovies.dummy.DummyContent;
+import com.pontes.andre.popularmovies.model.Favorites;
+import com.pontes.andre.popularmovies.model.Movie;
+import com.pontes.andre.popularmovies.model.Review;
+import com.pontes.andre.popularmovies.net.FetchReviewTask;
+import com.pontes.andre.popularmovies.net.FetchTrailerTask;
+import com.squareup.picasso.Picasso;
 
-/**
- * A fragment representing a single Movie detail screen.
- * This fragment is either contained in a {@link MovieListActivity}
- * in two-pane mode (on tablets) or a {@link MovieDetailActivity}
- * on handsets.
- */
-public class MovieDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
-    public static final String ARG_ITEM_ID = "item_id";
+import java.util.ArrayList;
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private DummyContent.DummyItem mItem;
+public class MovieDetailFragment extends Fragment implements OnReviewFetchListener, OnTrailerFetchListener  {
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+    private ArrayList<String> listUrls;
+
     public MovieDetailFragment() {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+        final Context context = getContext();
+
+        View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
+
+        final Movie movie = getMovie();
+
+        final ImageButton favorite = (ImageButton) view.findViewById(R.id.imageButton_favorite);
+
+
+        updateFavoriteStar(favorite,
+                Favorites.getInstance().isFavorite(movie.getId(), context));
+
+        favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Favorites db = Favorites.getInstance();
+
+                boolean isFavorite = db.isFavorite(movie.getId(), context);
+
+                if (isFavorite)
+                    db.remove(movie.getId(), context);
+                else
+                    db.insert(movie.getId(), context);
+
+                isFavorite = !isFavorite;
+
+                updateFavoriteStar(favorite, isFavorite);
+            }
+        });
+
+        TextView txtMovieName = (TextView) view.findViewById(R.id.textview_movie_name);
+        txtMovieName.setText(movie.getTitle());
+
+        TextView txtMovieSynopsis = (TextView) view.findViewById(R.id.textView_synopsis);
+        txtMovieSynopsis.setText(movie.getSynopsis());
+
+        RatingBar rating = (RatingBar) view.findViewById(R.id.ratingBar);
+        rating.setRating(movie.getVoteAvgInFive());
+
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageView_poster);
+
+        Picasso.with(context)
+                .load(movie.getCompletePosterUrl())
+                .into(imageView);
+
+        getActivity().setTitle(getString(R.string.synopsis));
+
+        FetchTrailerTask taskTrailer = new FetchTrailerTask(this);
+        taskTrailer.execute(movie.getId());
+
+        FetchReviewTask taskReview = new FetchReviewTask(this);
+        taskReview.execute(movie.getId());
+
+        super.onCreateView(inflater, container, savedInstanceState);
+        return view;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            return true;
+        }
+
+        if (item.getItemId() == R.id.menu_item_share && listUrls != null) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getAllUrls(listUrls));
+            sendIntent.setType("text/plain");
+            startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void updateFavoriteStar(ImageButton btn, boolean isFavorite) {
+
+        btn.setColorFilter(isFavorite ? Color.RED : Color.WHITE);
+    }
+
+    private Movie getMovie() {
+
+        Movie movieTwoPane = (Movie) this.getArguments().getParcelable("movie");
+        Movie movieOnePane = (Movie) this.getActivity().getIntent().getParcelableExtra("movie");
+
+        if (movieTwoPane != null)
+            return movieTwoPane;
+
+        if (movieOnePane != null)
+            return movieOnePane;
+
+
+        return null;
+    }
+
+    private String getAllUrls(ArrayList<String> listUrls) {
+        StringBuilder str = new StringBuilder();
+
+        boolean first = true;
+
+        for (String s : listUrls) {
+
+            if (!first)
+                str.append(" ; ");
+
+            str.append(s);
+
+            first = false;
+        }
+
+        return str.toString();
+    }
+
+    @Override
+    public void onReviewTaskCompleted(ArrayList<Review> reviews) {
+
+        if (reviews != null) {
+
+            LinearLayout mainLinearLayout = (LinearLayout) getView().findViewById(R.id.linear_details);
+
+            for (final Review review : reviews) {
+
+                LinearLayout newLayout = (LinearLayout)
+                        getActivity().getLayoutInflater().inflate(R.layout.linear_review_item, null);
+
+                TextView author = (TextView) newLayout.findViewById(R.id.textview_review_author);
+                author.setText(review.getAuthor());
+
+                TextView content = (TextView) newLayout.findViewById(R.id.textview_review_content);
+                content.setText(review.getContent());
+
+                mainLinearLayout.addView(newLayout);
+            }
+
+        } else {
+            Toast.makeText(getContext(), getString(R.string.no_internet), Toast.LENGTH_LONG);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
+    public void onTrailerTaskCompleted(ArrayList<String> listUrls) {
 
-        // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.movie_detail)).setText(mItem.content);
+        if (listUrls != null) {
+            this.listUrls = listUrls;
+
+            LinearLayout mainLinearLayout = (LinearLayout) getView().findViewById(R.id.linear_details);
+
+            for (final String url : listUrls) {
+
+                ImageButton newButton = (ImageButton) getActivity().getLayoutInflater().inflate(R.layout.button_youtube, null);
+
+                mainLinearLayout.addView(newButton);
+
+                newButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    }
+                });
+            }
+
+        } else {
+            Toast.makeText(getContext(), getString(R.string.no_internet), Toast.LENGTH_LONG);
         }
-
-        return rootView;
     }
+
 }

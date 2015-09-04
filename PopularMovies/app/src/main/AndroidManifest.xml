@@ -22,10 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".DetailActivity"
-            android:label="@string/title_activity_detail" >
-        </activity>
         <activity android:name=".SettingsActivity" />
         <activity
             android:name=".MovieDetailActivity"
@@ -36,5 +32,4 @@
                 android:value="com.pontes.andre.popularmovies.MovieListActivity" />
         </activity>
     </application>
-
 </manifest>

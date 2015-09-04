@@ -5,12 +5,6 @@
     android:divider="?android:attr/dividerHorizontal" android:orientation="horizontal"
     android:showDividers="middle" tools:context="com.pontes.andre.popularmovies.MovieListActivity">
 
-    <!--
-    This layout is a two-pane layout for the Movies
-    master/detail flow.
-    
-    -->
-
     <fragment android:id="@+id/movie_list"
         android:name="com.pontes.andre.popularmovies.MainActivityFragment"
         android:layout_width="0dp"
