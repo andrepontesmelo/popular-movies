@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,15 @@ import java.util.ArrayList;
 
 public class MovieDetailFragment extends Fragment implements OnReviewFetchListener, OnTrailerFetchListener  {
 
+    public static final String TRAILER = "trailer";
+    public static final String REVIEWS = "reviews";
+
+    private static final String LOG_TAG = MovieDetailFragment.class.getSimpleName();
+
     private ArrayList<String> listUrls;
+    private ArrayList<Review> reviews;
+
+    private View view;
 
     public MovieDetailFragment() {
     }
@@ -37,7 +46,7 @@ public class MovieDetailFragment extends Fragment implements OnReviewFetchListen
 
         final Context context = getContext();
 
-        View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
+        this.view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
         final Movie movie = getMovie();
 
@@ -83,14 +92,35 @@ public class MovieDetailFragment extends Fragment implements OnReviewFetchListen
 
         getActivity().setTitle(getString(R.string.synopsis));
 
-        FetchTrailerTask taskTrailer = new FetchTrailerTask(this);
-        taskTrailer.execute(movie.getId());
+        if (savedInstanceState == null) {
+            Log.v(LOG_TAG, "savedInstance is null. Do the requests =>>> ");
 
-        FetchReviewTask taskReview = new FetchReviewTask(this);
-        taskReview.execute(movie.getId());
+            FetchTrailerTask taskTrailer = new FetchTrailerTask(this);
+            taskTrailer.execute(movie.getId());
+
+            FetchReviewTask taskReview = new FetchReviewTask(this);
+            taskReview.execute(movie.getId());
+        } else
+        {
+            Log.v(LOG_TAG, "Instance is saved... request is not needed.");
+
+            ArrayList<String> listUrls = savedInstanceState.getStringArrayList(TRAILER);
+            ArrayList<Review> reviews = savedInstanceState.getParcelableArrayList(REVIEWS);
+
+            onTrailerTaskCompleted(listUrls);
+            onReviewTaskCompleted(reviews);
+        }
 
         super.onCreateView(inflater, container, savedInstanceState);
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putStringArrayList(TRAILER, listUrls);
+        outState.putParcelableArrayList(REVIEWS, reviews);
     }
 
     private void updateFavoriteStar(ImageButton btn, boolean isFavorite) {
@@ -117,9 +147,14 @@ public class MovieDetailFragment extends Fragment implements OnReviewFetchListen
     @Override
     public void onReviewTaskCompleted(ArrayList<Review> reviews) {
 
-        if (reviews != null) {
+        Log.v(LOG_TAG, "onReviewTaskCompleted()");
 
-            LinearLayout mainLinearLayout = (LinearLayout) getView().findViewById(R.id.linear_details);
+        if (reviews != null) {
+            Log.v(LOG_TAG, "reviews is not null.");
+
+            this.reviews = reviews;
+
+            LinearLayout mainLinearLayout = (LinearLayout) view.findViewById(R.id.linear_details);
 
             for (final Review review : reviews) {
 
@@ -137,6 +172,8 @@ public class MovieDetailFragment extends Fragment implements OnReviewFetchListen
 
         } else {
             Toast.makeText(getContext(), getString(R.string.no_internet), Toast.LENGTH_LONG);
+            Log.v(LOG_TAG, "reviews not null!!");
+
         }
     }
 
@@ -146,7 +183,7 @@ public class MovieDetailFragment extends Fragment implements OnReviewFetchListen
         if (listUrls != null) {
             this.listUrls = listUrls;
 
-            LinearLayout mainLinearLayout = (LinearLayout) getView().findViewById(R.id.linear_details);
+            LinearLayout mainLinearLayout = (LinearLayout) view.findViewById(R.id.linear_details);
 
             for (final String url : listUrls) {
 

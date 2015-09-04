@@ -1,8 +1,13 @@
 package com.pontes.andre.popularmovies.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.pontes.andre.popularmovies.provider.review.ReviewContentValues;
 
-public class Review {
+import java.util.Date;
+
+public class Review implements Parcelable {
     private String author;
     private String content;
 
@@ -30,4 +35,34 @@ public class Review {
 
         return contentValues;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(author);
+        out.writeString(content);
+    }
+
+    public Review()
+    {
+    }
+
+    private Review(Parcel in) {
+        author = in.readString();
+        content = in.readString();
+    }
+
+    public static final Parcelable.Creator<Review> CREATOR = new Parcelable.Creator<Review>() {
+        public Review createFromParcel(Parcel in) {
+            return new Review(in);
+        }
+
+        public Review[] newArray(int size) {
+            return new Review[size];
+        }
+    };
+
 }
