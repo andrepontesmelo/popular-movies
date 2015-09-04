@@ -1,7 +1,5 @@
 package com.pontes.andre.popularmovies.provider.trailer;
 
-import java.util.Date;
-
 import android.content.Context;
 import android.content.ContentResolver;
 import android.net.Uri;
@@ -32,7 +30,6 @@ public class TrailerContentValues extends AbstractContentValues {
     /**
      * Update row(s) using the values stored by this object and the given selection.
      *
-     * @param contentResolver The content resolver to use.
      * @param where The selection to use (can be {@code null}).
      */
     public int update(Context context, @Nullable TrailerSelection where) {

@@ -5,12 +5,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +17,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pontes.andre.popularmovies.dummy.DummyContent;
 import com.pontes.andre.popularmovies.model.Favorites;
 import com.pontes.andre.popularmovies.model.Movie;
 import com.pontes.andre.popularmovies.model.Review;
@@ -126,8 +121,8 @@ public class MovieDetailFragment extends Fragment implements OnReviewFetchListen
 
     private Movie getMovie() {
 
-        Movie movieTwoPane = (Movie) this.getArguments().getParcelable("movie");
-        Movie movieOnePane = (Movie) this.getActivity().getIntent().getParcelableExtra("movie");
+        Movie movieTwoPane = this.getArguments().getParcelable("movie");
+        Movie movieOnePane = this.getActivity().getIntent().getParcelableExtra("movie");
 
         if (movieTwoPane != null)
             return movieTwoPane;

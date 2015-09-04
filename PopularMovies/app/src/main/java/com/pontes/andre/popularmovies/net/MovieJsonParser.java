@@ -14,7 +14,7 @@ public class MovieJsonParser {
 
     public ArrayList<Movie> Parse(String json)
             throws JSONException, ParseException {
-        ArrayList<Movie> result = new ArrayList<Movie>();
+        ArrayList<Movie> result = new ArrayList<>();
 
         JSONObject root = new JSONObject(json);
 

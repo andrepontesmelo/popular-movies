@@ -13,7 +13,7 @@ public class ReviewJsonParser {
 
     public ArrayList<Review> Parse(String json)
             throws JSONException, ParseException {
-        ArrayList<Review> result = new ArrayList<Review>();
+        ArrayList<Review> result = new ArrayList<>();
 
         JSONObject root = new JSONObject(json);
 

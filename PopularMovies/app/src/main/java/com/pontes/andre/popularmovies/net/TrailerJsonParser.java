@@ -13,7 +13,7 @@ public class TrailerJsonParser {
 
     public ArrayList<String> Parse(String json)
             throws JSONException, ParseException {
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
 
         JSONObject root = new JSONObject(json);
 

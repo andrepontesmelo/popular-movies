@@ -4,10 +4,6 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import com.pontes.andre.popularmovies.provider.PopularMovieProvider;
-import com.pontes.andre.popularmovies.provider.favorites.FavoritesColumns;
-import com.pontes.andre.popularmovies.provider.movie.MovieColumns;
-import com.pontes.andre.popularmovies.provider.review.ReviewColumns;
-import com.pontes.andre.popularmovies.provider.trailer.TrailerColumns;
 
 /**
  * Columns for the {@code trailer} table.

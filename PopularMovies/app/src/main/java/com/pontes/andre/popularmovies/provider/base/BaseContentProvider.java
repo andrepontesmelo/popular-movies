@@ -150,7 +150,7 @@ public abstract class BaseContentProvider extends ContentProvider {
 
     @Override
     public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations) throws OperationApplicationException {
-        HashSet<Uri> urisToNotify = new HashSet<Uri>(operations.size());
+        HashSet<Uri> urisToNotify = new HashSet<>(operations.size());
         for (ContentProviderOperation operation : operations) {
             urisToNotify.add(operation.getUri());
         }

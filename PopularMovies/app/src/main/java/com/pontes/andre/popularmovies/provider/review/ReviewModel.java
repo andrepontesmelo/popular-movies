@@ -2,10 +2,7 @@ package com.pontes.andre.popularmovies.provider.review;
 
 import com.pontes.andre.popularmovies.provider.base.BaseModel;
 
-import java.util.Date;
-
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 /**
  * Data model for the {@code review} table.

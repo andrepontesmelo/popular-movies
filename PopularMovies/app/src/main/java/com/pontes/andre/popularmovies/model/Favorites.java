@@ -37,7 +37,7 @@ public class Favorites {
 
     public ArrayList<Long> getAll(Context context) {
         Log.v(LOG_TAG, "getAll()");
-        ArrayList<Long> result = new ArrayList<Long>();
+        ArrayList<Long> result = new ArrayList<>();
 
         FavoritesSelection where = new FavoritesSelection();
 

@@ -121,7 +121,7 @@ public class Movie implements Parcelable {
 
     public static ArrayList<Movie> getAll(Context context) {
 
-        ArrayList<Movie> result = new ArrayList<Movie>();
+        ArrayList<Movie> result = new ArrayList<>();
 
         MovieSelection where = new MovieSelection();
 
