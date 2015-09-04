@@ -1,5 +1,6 @@
 package com.pontes.andre.popularmovies;
 
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,11 +43,7 @@ public class MovieDetailActivity extends AppCompatActivity implements OnTrailerF
         }
 
         if (item.getItemId() == R.id.menu_item_share && listUrls != null) {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, getAllUrls(listUrls));
-            sendIntent.setType("text/plain");
-            startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+            startActivity(share(listUrls, getResources()));
 
             return true;
         }
@@ -54,7 +51,17 @@ public class MovieDetailActivity extends AppCompatActivity implements OnTrailerF
         return super.onOptionsItemSelected(item);
     }
 
-    private String getAllUrls(ArrayList<String> listUrls) {
+    public static Intent share(ArrayList<String> listUrls, Resources resources) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getAllUrls(listUrls));
+        sendIntent.setType("text/plain");
+
+        return Intent.createChooser(sendIntent, resources.getText(R.string.send_to));
+    }
+
+
+    public static String getAllUrls(ArrayList<String> listUrls) {
         StringBuilder str = new StringBuilder();
 
         boolean first = true;

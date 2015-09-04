@@ -1,10 +1,6 @@
 package com.pontes.andre.popularmovies.provider.favorites;
 
-import java.util.Date;
-
 import android.database.Cursor;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.pontes.andre.popularmovies.provider.base.AbstractCursor;
 

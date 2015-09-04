@@ -53,7 +53,11 @@ public class MovieListActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        if (mTwoPane)
+            getMenuInflater().inflate(R.menu.menu_main_tablet, menu);
+        else
+            getMenuInflater().inflate(R.menu.menu_main_phone, menu);
+
         return true;
     }
 
@@ -62,6 +66,11 @@ public class MovieListActivity extends AppCompatActivity
 
         if (item.getItemId() == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+        if (item.getItemId() == R.id.menu_item_share && listUrls != null) {
+            startActivity(MovieDetailActivity.share(listUrls, getResources()));
+
             return true;
         }
 

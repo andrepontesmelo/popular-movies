@@ -1,11 +1,8 @@
 package com.pontes.andre.popularmovies.provider.favorites;
 
-import java.util.Date;
-
 import android.content.Context;
 import android.content.ContentResolver;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.pontes.andre.popularmovies.provider.base.AbstractContentValues;
