@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,26 +95,6 @@ public class MovieDetailFragment extends Fragment implements OnReviewFetchListen
         return view;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            return true;
-        }
-
-        if (item.getItemId() == R.id.menu_item_share && listUrls != null) {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, getAllUrls(listUrls));
-            sendIntent.setType("text/plain");
-            startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void updateFavoriteStar(ImageButton btn, boolean isFavorite) {
 
         btn.setColorFilter(isFavorite ? Color.RED : Color.WHITE);
@@ -134,23 +115,6 @@ public class MovieDetailFragment extends Fragment implements OnReviewFetchListen
         return null;
     }
 
-    private String getAllUrls(ArrayList<String> listUrls) {
-        StringBuilder str = new StringBuilder();
-
-        boolean first = true;
-
-        for (String s : listUrls) {
-
-            if (!first)
-                str.append(" ; ");
-
-            str.append(s);
-
-            first = false;
-        }
-
-        return str.toString();
-    }
 
     @Override
     public void onReviewTaskCompleted(ArrayList<Review> reviews) {
@@ -203,6 +167,9 @@ public class MovieDetailFragment extends Fragment implements OnReviewFetchListen
         } else {
             Toast.makeText(getContext(), getString(R.string.no_internet), Toast.LENGTH_LONG);
         }
+
+
+        ((OnTrailerFetchListener) getActivity()).onTrailerTaskCompleted(listUrls);
     }
 
 }

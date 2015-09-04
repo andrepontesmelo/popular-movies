@@ -8,10 +8,14 @@ import android.view.MenuItem;
 
 import com.pontes.andre.popularmovies.model.Movie;
 
+import java.util.ArrayList;
+
 public class MovieListActivity extends AppCompatActivity
-        implements IObserverFragmentSelect {
+        implements IObserverFragmentSelect, OnTrailerFetchListener   {
 
     private boolean mTwoPane;
+
+    private ArrayList<String> listUrls = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,5 +66,10 @@ public class MovieListActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTrailerTaskCompleted(ArrayList<String> listUrls) {
+        this.listUrls = listUrls;
     }
 }
