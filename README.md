@@ -15,7 +15,7 @@ reviews and ratings using themoviedb.org REST api.
   - [ **Picasso** ]( https://github.com/square/picasso ) for image
 handling/caching
   - [ **BoD** ]( https://github.com/BoD/android-contentprovider-generator )
-to generate the a sqlite content provider automatically
+to generate a sqlite content provider automatically
 
 ## Screenshots
 
