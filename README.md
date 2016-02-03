@@ -8,6 +8,8 @@ reviews and ratings using themoviedb.org REST api.
  - Tablet layout optimization applied automatically depending on the device
  - Local sqlite database being used in order to cache movie data
  and reduce REST api calls
+ - User can play movie trailers
+ - User can share movie trailer url
 
 ## Libraries currently being used
   - [ **Picasso** ]( https://github.com/square/picasso ) for image
